@@ -1,0 +1,102 @@
+from __future__ import print_function
+from __future__ import division
+import sys
+import random
+import os
+
+# ***** readme *****
+# This code extracts chimeric read from sam file for training, with pos and direction
+# The input is *.sam
+
+def ReverseComplement(str):
+    return str[::-1].replace('A', 't').replace('T', 'a').replace('G', 'c').replace('C', 'g').upper()
+
+
+chimericfile = open(sys.argv[1])
+mappingpath = sys.argv[2]
+linenum = len(chimericfile.readlines())
+chimericfile.close()
+count = 0
+cellindex = []
+for dir in os.listdir(mappingpath):
+    cellindex.append(dir)
+while count < linenum:
+    thisindex = random.sample(cellindex, 1)[0]
+    try:
+        sam = []
+        for file in os.listdir(mappingpath + thisindex):
+            if file.find('Aligned.sortedByCoord.out.sam') > -1:
+                samfile = open(mappingpath + thisindex + '/' + file)
+                sam = samfile.readlines()
+                break
+    except:
+        continue
+    if len(sam) == 0:
+        continue
+    thiscount = 0
+    while thiscount < len(sam) / 5 and count < linenum:
+        while True:
+            a = random.randint(1, len(sam)) - 1
+            b = random.randint(1, len(sam)) - 1
+            if len(sam[a].split('\t')) < 6 or len(sam[b].split('\t')) < 6:
+                continue
+            cigar1 = sam[a].split('\t')[5]
+            cigar2 = sam[b].split('\t')[5]
+            chr1 = sam[a].split('\t')[2]
+            chr2 = sam[b].split('\t')[2]
+            if not chr1.startswith('chr'):
+                chr1 = 'chr' + chr1
+            if not chr2.startswith('chr'):
+                chr2 = 'chr' + chr2
+            if not (chr1[3:].isdigit() or chr1 == 'chrX' or chr1 == 'chrY') or not (chr2[3:].isdigit() or chr2 == 'chrX' or chr2 == 'chrY'):
+                continue
+            if not (len(sam[a].split('\t')) < 9 or len(cigar1) > 4 or len(cigar2) > 4 or chr1 == '*' or chr2 == '*'):
+                break
+        read1length = 30
+        read2length = 60 - read1length
+        c = random.randint(0, 60 - read1length - 1)
+        d = random.randint(0, 60 - read2length - 1)
+        line1 = sam[a]
+        try:
+            read1 = line1.split('\t')[9][c:c + read1length]
+        except:
+            sys.stderr.write(line1)
+        line2 = sam[b]
+        try:
+            read2 = line2.split('\t')[9][d:d + read2length]
+        except:
+            sys.stderr.write(line2)
+        info1 = line1.split('\t')
+        info2 = line2.split('\t')
+        flag1 = int(info1[1])
+        flag2 = int(info2[1])
+        e = random.randint(0, 1)
+        f = random.randint(0, 1)
+        if e == 0:
+            e = -1
+            read2 = ReverseComplement(read2)
+            pos2 = int(info2[3]) + d + read2length - 1
+        else:
+            pos2 = int(info2[3]) + d
+        if f == 0:
+            f = -1
+            read1 = ReverseComplement(read1)
+            pos1 = int(info1[3]) + c
+        else:
+            pos1 = int(info1[3]) + c + read1length - 1
+
+
+        if f == -1:
+            direct1 = '+'
+        else:
+            direct1 = '-'
+        if e == 1:
+            direct2 = '+'
+        else:
+            direct2 = '-'
+        if read1.find('N') == -1 and read2.find('N') == -1 and len(read1 + read2) == 60:
+            print(read1.upper() + read2.upper() + '\t' + str(read1length) + '\t', end='')
+            print(chr1 + ':' + str(pos1) + ':' + direct1 + '\t' + chr2 + ':' + str(pos2) + ':' + direct2)
+            count += 1
+            thiscount += 1
+    samfile.close()
