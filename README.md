@@ -17,7 +17,7 @@ The software below should be in your PATH.
 - python module: [pyensembl](https://github.com/openvax/pyensembl)
 - python module: numpy
 - python module: scipy
-
+- python module: pysam
 
 
 ## Recommand
