@@ -126,5 +126,5 @@ if the command is `sh scFusion_dev/bin/CombinePipeline_before_FS.sh testout/ 601
 then run `srun 1 20 sh scFusion_dev/bin/CombinePipeline_before_FS.sh testout/ 601 605 scFusion_dev/bin/../data/ref_annot.gtf scFusion_dev/bin/../data/hg19mappability75.txt scFusion_dev/bin/../data/exon_probe.hg19.gene.new.bed scFusion_dev/bin/`
 
 
-
+## Note
 For non-academic use, please email Prof. Xi (ruibinxi@math.pku.edu.cn)
