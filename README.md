@@ -62,6 +62,10 @@ or
 
 `python scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex_2.7.2b_normal/ -t 200`
 
+### Expected running time
+
+The running on the toy data should be finished in 10 minites on an 8-core computer.
+
 ## Command Line Options
 
 Parameters must be specified: 
