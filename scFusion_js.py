@@ -217,9 +217,10 @@ try:
     if not SkipBS:
         numtask = min(numthread - 1, numcell)
         numcelleachtask = int(numpy.ceil(numcell / numtask))
+        actualnumtask = int(numpy.ceil(numcell / numcelleachtask))
         print('Please run these commmands parallelly with your job scheduler! \n(Hint: a for loop is helpful since '
               'these commands are the same except the cell index)\n--------------------------------------------')
-        for j in range(numtask):
+        for j in range(actualnumtask):
             RunBS(cellindex[j * numcelleachtask], min(cellindex[(j + 1) * numcelleachtask - 1], end))
         print('--------------------------------------------\n\n')
 
