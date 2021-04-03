@@ -45,13 +45,13 @@ def printlog(str):
 def RunSTARMapping(s, e, core):
     os.system('sh ' + codedir + 'StarMapping_Chimeric.sh ' + filedir + ' ' + str(s) + ' ' + str(e) + ' ' + outdir +
               'StarMapping/ ' + starrefdir + ' ' + str(core))
-    printlog('Finished mapping! Index: ' + str(s) + ' ~ ' + str(e) + '\n')
+    printlog('Finish mapping! Index: ' + str(s) + ' ~ ' + str(e) + '\n')
 
 
 def RunBS(s, e):
     os.system('sh ' + codedir + 'CombinePipeline_before_FS.sh ' + outdir + ' ' + str(s) + ' ' + str(e) + ' ' +
               gtffilepath + ' ' + mappabilityfilepath + ' ' + exonposfilepath + ' ' + codedir)
-    printlog('Finished Basic Processing! Index: ' + str(s) + ' ~ ' + str(e) + '\n')
+    printlog('Finish Basic Processing! Index: ' + str(s) + ' ~ ' + str(e) + '\n')
 
 
 try:
@@ -232,12 +232,13 @@ try:
     if not SkipBS:
         numtask = min(numthread - 1, numcell)
         numcelleachtask = int(numpy.ceil(numcell / numtask))
+        actualnumtask = int(numpy.ceil(numcell / numcelleachtask))
         threads = []
         aaa = subprocess.check_output(
             'pyensembl install --reference-name GRCH37 --annotation-name my_genome_features --gtf ' + gtffilepath,
             shell=True, stderr=subprocess.STDOUT)
         logfile.write(str(aaa))
-        for j in range(numtask):
+        for j in range(actualnumtask):
             printlog('Start Basic Processing! Index: ' + str(cellindex[j * numcelleachtask]) + ' ~ ' + str(
                 min(cellindex[(j + 1) * numcelleachtask - 1], end)) + ', using core: 1\n')
             threads.append(threading.Thread(target=RunBS, args=(
