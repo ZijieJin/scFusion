@@ -48,7 +48,7 @@ for line in templines:
     linedic[line] = score
 numrecord = len(linedic)
 for key in sorted(linedic, key=linedic.__getitem__, reverse=True):
-    if bigcount < min(10.0, numrecord / 50):
+    if bigcount < min(10.0, numpy.floor(numrecord / 50)):
         bigcount += 1
     else:
         print(key, end='')
