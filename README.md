@@ -6,8 +6,8 @@ scFusion is a computational pipeline for detecting gene fusions at single-cell r
 
 The software below should be in your PATH.
 
-- [STAR](https://github.com/alexdobin/STAR) >= 2.7 
-- samtools (tested with version 0.1.19, and 1.2 should work)
+- [STAR](https://github.com/alexdobin/STAR) >= 2.7 (tested on 2.7.2d)
+- samtools (tested on version 0.1.19, and 1.2 should work)
 - bedtools
 - python 3
 - R >= 3.5
