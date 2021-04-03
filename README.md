@@ -32,7 +32,7 @@ The software below should be in your PATH.
 
 - 64 GB Memory
 
-- 20 CPU cores
+- 8 CPU cores
 
 ## Data Requirement
 
