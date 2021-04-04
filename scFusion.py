@@ -185,6 +185,8 @@ try:
         sys.exit()
     logfile = open(outdir + 'log.txt', 'w')
     printlog('\nPreparing for scFusion!\n')
+    os.system('python ' + codedir + 'Addchr2gtf.py ' + gtffilepath + ' > ' + gtffilepath + '.added')
+    gtffilepath = gtffilepath + '.added'
     os.system('python ' + codedir + 'GetGenePos.py ' + gtffilepath + ' > ' + codedir + '/../data/GenePos.txt')
     os.system('python ' + codedir + 'GetExonPos.py ' + gtffilepath + ' > ' + exonposfilepath)
     for i in range(start, end + 1):
