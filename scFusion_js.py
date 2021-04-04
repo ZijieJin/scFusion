@@ -182,8 +182,10 @@ try:
     print(
         "\nThe job scheduler version of scFusion gives you the running commands,\n and you should apply them with your own job scheduler's configurations\n")
     print('\nPreparing for scFusion!\n')
-    os.system('python ' + codedir + 'GetGenePos.py ' + gtffilepath + ' > ' + codedir + '/../data/GenePos.txt\n')
-    os.system('python ' + codedir + 'GetExonPos.py ' + gtffilepath + ' > ' + exonposfilepath + '\n')
+    os.system('python ' + codedir + 'Addchr2gtf.py ' + gtffilepath + ' > ' + gtffilepath + '.added')
+    gtffilepath = gtffilepath + '.added'
+    os.system('python ' + codedir + 'GetGenePos.py ' + gtffilepath + ' > ' + codedir + '/../data/GenePos.txt')
+    os.system('python ' + codedir + 'GetExonPos.py ' + gtffilepath + ' > ' + exonposfilepath)
     aaa = subprocess.check_output(
         'pyensembl install --reference-name GRCH37 --annotation-name my_genome_features --gtf ' + gtffilepath, shell=True, stderr=subprocess.STDOUT)
     for i in range(start, end + 1):
