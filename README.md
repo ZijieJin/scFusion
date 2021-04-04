@@ -42,7 +42,7 @@ The software below should be in your PATH.
 
 - Reference genome file (*.fa)(like hg19.fa, file size = ~3G)
 
-- GTF annotation file (*.gtf) (Can be obtained from Ensembl (ftp://ftp.ensembl.org/pub/), NCBI, or UCSC)
+- GTF annotation file (*.gtf) (Can be obtained from STAR reference Index or Ensembl (ftp://ftp.ensembl.org/pub/), NCBI, or UCSC)
 
 - [Mappabilityfile](https://genome.ucsc.edu/cgi-bin/hgTables) (Can be obtained from UCSC)
 
