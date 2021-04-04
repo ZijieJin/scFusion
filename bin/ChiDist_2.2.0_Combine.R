@@ -1,10 +1,3 @@
-## README ####
-### V 2.2.0
-### 去掉similarity的部分
-##############
-
-
-## 设分布都是ZINB分布，先用极大似然估计参数
 CalcZINB = function(par)
 {
   sum = 0
