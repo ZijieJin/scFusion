@@ -6,7 +6,7 @@ scFusion is a computational pipeline for detecting gene fusions at single-cell r
 
 The software below should be in your PATH.
 
-- [STAR](https://github.com/alexdobin/STAR) >= 2.7 (tested on 2.7.2d and 2.7.8a)
+- [STAR](https://github.com/alexdobin/STAR) >= 2.7.2d (tested on 2.7.2d and 2.7.8a)
 - samtools (tested on version 1.10)
 - bedtools
 - python 3
@@ -20,9 +20,9 @@ The software below should be in your PATH.
 - python module: pysam
 
 
-## Recommand
+## Recommend
 
-- 64 GB Memory or more for each task
+- 64 GB memory or more for each task
 
 - 200 CPU cores or more
 
@@ -34,11 +34,11 @@ The software below should be in your PATH.
 
 ## Optional
 
-- Job scheduler (e.g. Slurm)
+- Job schedular (e.g. Slurm)
 
 ## Data Requirement
 
-- A Series of single cell sequencing file, renamed with numbers, recommand with continuous numbers. (*_1.fastq, *_2.fastq) (like 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq)
+- A series of single cell sequencing files, renamed with numbers, recommend with continuous numbers. (*_1.fastq, *_2.fastq) (like 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq)
 
 - STAR reference dataset(Please build it, see [Section 2 of STARManual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf))
 
@@ -50,19 +50,19 @@ The software below should be in your PATH.
 
 ## Usage
 
-Two versions of scFusion are contained. The normal version (scFusion.py) run the whole pipelines, while the job scheduler version give you a series of commands that you can run them with your job scheduler's configuration. We recommand you using the job scheduler version, since it can make use of all the computational resources available. 
+Two versions of scFusion are included. The normal version (scFusion.py) runs the whole pipeline, while the job schedular version gives you a series of commands that you can run them with your job schedular's configuration. We recommend you using the job schedular version, since it can make use of all the computational resources available. 
 
 Example:
 
-if 300 sequencing data file (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex_2.7.2b_normal/, and 200 cores are available, please run:
+if 300 sequencing data files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 200 cores are available, please run:
 
-`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex_2.7.2b_normal/ -t 200`
+`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 200`
 
 or the job schedular version:
 
-`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex_2.7.2b_normal/ -t 200`
+`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 200`
 
-The results are shown on the folder: FinalResult/FinalOutput*
+The results are shown on the folder: testout/FinalResult/FinalOutput*
 
 ### Expected running time
 
@@ -80,13 +80,13 @@ Parameters must be specified:
     
     -s, --STARReference: The reference folder of STAR. The reference should be built before running scFusion. 
     
-Parameters with default value, but should be change for your setting: 
+Parameters with default values, but should be changed for your setting: 
 
-    -g, --Genome: The genome reference file (*.fasta or *.fa), default is the 'hg19.fa' in the data folder
+    -g, --Genome: The genome reference file (*.fasta or *.fa), default is 'hg19.fa' in the data folder
     
-    -a, --Annotation: The gtf annotation file (*.gtf), default is the 'ref_annot.gtf'in the data folder
+    -a, --Annotation: The gtf annotation file (*.gtf), default is 'ref_annot.gtf'in the data folder
     
-    -m, --Mappability: The mappability file, default is the 'hg19mappability75.txt' in the data folder, left blank for keep all reads
+    -m, --Mappability: The mappability file, default is 'hg19mappability75.txt' in the data folder, left blank for keeping all reads
     
     -o, --OutDir: The output folder of the results and temperal files, default is the same as FileDir
     
@@ -94,30 +94,30 @@ Parameters with default value, but should be change for your setting:
     
     -l, --LimitThread: Number of maximum threads allowed for each STAR mapping task, default is 20
     
-    -w, --Weight: The weight file of network, default is the 'weight-V9-2.hdf5' in the data folder. If Retraining is allowed, the file is the initial weight of the network to be retrained; if Retraining step is skipped, this weight file is used in the predict.  
+    -w, --Weight: The weight file of the deep-learning network, default is 'weight-V9-2.hdf5' in the data folder. If retraining is allowed, this file is the initial weight file of the network to be retrained; if retraining step is skipped, this weight file is used in the predicting step.  
     
-    -E, --Epoch: The number of epoch in the retraining step between 3 and 999, default is 100
+    -E, --Epoch: The number of epochs in the retraining step between 3 and 999, default is 100
     
-    -p, --Prefix: The prefix of result file, default is blank. This should be specified if users want to compare results of diffrerent settings.
+    -p, --Prefix: The prefix of result file, default is blank. This should be specified if users want to compare results of different settings.
     
     -v, --PvalueCutoff: Pvalue(FDR) cutoff of the statistical model, default is 0.05
     
-    -N, --NetworkCutoff: Network classification probability cutoff, default is 0.75
+    -n, --NetworkCutoff: Network score cutoff, default is 0.75
     
 Step Controls:
 
     --SkipMapping: Skip STAR Mapping, if you already have the mapping result at OutDir/StarMapping/
     
-    --SkipBS: Skip the basic processing step, if you already have the *_FusionSupport.txt at OutDir/ChimericOut/
+    --SkipBS: Skip the basic processing step, if you already have *_FusionSupport.txt at OutDir/ChimericOut/
     
-    --SkipCombining: Skip the combining step, if you already have the *ChiDist_middle.txt at OutDir/ChiDist/
+    --SkipCombining: Skip the combining step, if you already have *ChiDist_middle.txt at OutDir/ChiDist/
     
     --SkipRetrain: Skip the retraining step, and apply the weights specified by -w to the network
     
     --SkipPredict: Skip the predicting step using network, if you already have the *ChiDist_filtered.txt at OutDir/ChiDist/
 
 
-## If you are using job scheduler
+## If you are using job schedular
 
 Take Slurm as example. The simplest execution command is `srun 1 20 XXXXX`.
 
