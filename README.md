@@ -38,7 +38,7 @@ The software below should be in your PATH.
 
 ## Data Requirement
 
-- A series of single cell sequencing files, renamed with numbers, recommend with continuous numbers. (*_1.fastq, *_2.fastq) (like 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq)
+- A series of single cell sequencing files, renamed with numbers, recommended with continuous numbers. (*_1.fastq, *_2.fastq) (like 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq)
 
 - STAR reference dataset(Please build it, see [Section 2 of STARManual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf))
 
@@ -50,11 +50,11 @@ The software below should be in your PATH.
 
 ## Usage
 
-Two versions of scFusion are included. The normal version (scFusion.py) runs the whole pipeline, while the job schedular version gives you a series of commands that you can run them with your job schedular's configuration. We recommend you using the job schedular version, since it can make use of all the computational resources available. 
+Two versions of scFusion are included. The normal version (scFusion.py) runs the whole pipeline, while the job schedular version gives you a series of commands that you can run them with your job schedular's configuration. We recommend you using the job schedular version, since it can make use of all the available computational resources. 
 
 Example:
 
-if 300 sequencing data files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 200 cores are available, please run:
+If there are 300 sequencing data files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 200 cores are available, please run:
 
 `python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 200`
 
@@ -114,7 +114,7 @@ Step Controls:
     
     --SkipRetrain: Skip the retraining step, and apply the weights specified by -w to the network
     
-    --SkipPredict: Skip the predicting step using network, if you already have the *ChiDist_filtered.txt at OutDir/ChiDist/
+    --SkipPredict: Skip the predicting step using deep-learning network, if you already have the *ChiDist_filtered.txt at OutDir/ChiDist/
 
 
 ## If you are using job schedular
