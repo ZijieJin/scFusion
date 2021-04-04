@@ -6,14 +6,14 @@ scFusion is a computational pipeline for detecting gene fusions at single-cell r
 
 The software below should be in your PATH.
 
-- [STAR](https://github.com/alexdobin/STAR) >= 2.7 
-- samtools (tested with version 0.1.19, and 1.2 should work)
+- [STAR](https://github.com/alexdobin/STAR) >= 2.7 (tested on 2.7.2d and 2.7.8a)
+- samtools (tested on version 1.10)
 - bedtools
 - python 3
-- R >= 3.5
+- R >= 3.5 (tested on 3.5.1, 3.6.0, 4.0.2)
 
-- python module: tensorflow
-- python module: keras
+- python module: tensorflow (tested on version 2.3.0)
+- python module: keras (tested on version 2.4.3)
 - python module: [pyensembl](https://github.com/openvax/pyensembl)
 - python module: numpy
 - python module: scipy
@@ -21,8 +21,6 @@ The software below should be in your PATH.
 
 
 ## Recommand
-
-- Job scheduler (e.g. Slurm)
 
 - 64 GB Memory or more for each task
 
@@ -34,6 +32,10 @@ The software below should be in your PATH.
 
 - 8 CPU cores
 
+## Optional
+
+- Job scheduler (e.g. Slurm)
+
 ## Data Requirement
 
 - A Series of single cell sequencing file, renamed with numbers, recommand with continuous numbers. (*_1.fastq, *_2.fastq) (like 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq)
@@ -42,25 +44,29 @@ The software below should be in your PATH.
 
 - Reference genome file (*.fa)(like hg19.fa, file size = ~3G)
 
-- GTF annotation file (*.gtf) (Ensembl (ftp://ftp.ensembl.org/pub/), NCBI, or UCSC)
+- GTF annotation file (*.gtf) (Can be obtained from Ensembl (ftp://ftp.ensembl.org/pub/), NCBI, or UCSC)
 
 - [Mappabilityfile](https://genome.ucsc.edu/cgi-bin/hgTables) (Can be obtained from UCSC)
 
 ## Usage
 
-Uncompress the badgene.zip to the data/badgene/ folder. 
-
-Two versions of scFusion are contained. The normal version (scFusion.py) run the whole pipelines, while the job scheduler version give you a series of commands that you can run them with your job scheduler's configuration. We recommand you to use the job scheduler version, since it can make use of all the computational resources available. 
+Two versions of scFusion are contained. The normal version (scFusion.py) run the whole pipelines, while the job scheduler version give you a series of commands that you can run them with your job scheduler's configuration. We recommand you using the job scheduler version, since it can make use of all the computational resources available. 
 
 Example:
 
 if 300 sequencing data file (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex_2.7.2b_normal/, and 200 cores are available, please run:
 
-`python scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex_2.7.2b_normal/ -t 200`
+`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex_2.7.2b_normal/ -t 200`
 
-or
+or the job schedular version:
 
-`python scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex_2.7.2b_normal/ -t 200`
+`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex_2.7.2b_normal/ -t 200`
+
+The results are shown on the folder: FinalResult/FinalOutput*
+
+### Expected running time
+
+The running on the test data with 10 cells should be finished in 10 minites on an 8-core computer.
 
 ## Command Line Options
 
@@ -73,7 +79,7 @@ Parameters must be specified:
     -e, --End: The last index of single cell sequencing file
     
     -s, --STARReference: The reference folder of STAR. The reference should be built before running scFusion. 
-
+    
 Parameters with default value, but should be change for your setting: 
 
     -g, --Genome: The genome reference file (*.fasta or *.fa), default is the 'hg19.fa' in the data folder
@@ -96,8 +102,8 @@ Parameters with default value, but should be change for your setting:
     
     -v, --PvalueCutoff: Pvalue(FDR) cutoff of the statistical model, default is 0.05
     
-    -n, --NetworkCutoff: Network classification probability cutoff, default is 0.75
-
+    -N, --NetworkCutoff: Network classification probability cutoff, default is 0.75
+    
 Step Controls:
 
     --SkipMapping: Skip STAR Mapping, if you already have the mapping result at OutDir/StarMapping/
