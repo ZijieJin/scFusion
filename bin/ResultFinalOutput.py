@@ -25,11 +25,13 @@ for line in refannotfile.readlines():
         end = int(info[4])
         strand = info[6]
         geneinfo = info[8].split('; ')
-        if len(geneinfo) > 4:
-            genename = geneinfo[4][11:-1]
-            genetype = geneinfo[2][11:-1]
-        else:
-            continue
+        for item in geneinfo:
+            if item.startswith('gene_name'):
+                genename = item[11:-1]
+            if item.startswith('gene_type'):
+                genetype = item[11:-1]
+            if item.startswith('gene_biotype'):
+                genetype = item[14:-1]
         genestrand[genename] = strand
 refannotfile.close()
 outabridge.write(
