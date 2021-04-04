@@ -6,8 +6,8 @@ scFusion is a computational pipeline for detecting gene fusions at single-cell r
 
 The software below should be in your PATH.
 
-- [STAR](https://github.com/alexdobin/STAR) >= 2.7 (tested on 2.7.2d)
-- samtools (tested on version 0.1.19, and 1.2 should work)
+- [STAR](https://github.com/alexdobin/STAR) >= 2.7 
+- samtools (tested with version 0.1.19, and 1.2 should work)
 - bedtools
 - python 3
 - R >= 3.5
@@ -62,12 +62,6 @@ or
 
 `python scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex_2.7.2b_normal/ -t 200`
 
-The results are shown on the folder: FinalResults/FinalOutput*
-
-### Expected running time
-
-The running on the toy data should be finished in 10 minites on an 8-core computer.
-
 ## Command Line Options
 
 Parameters must be specified: 
@@ -79,7 +73,7 @@ Parameters must be specified:
     -e, --End: The last index of single cell sequencing file
     
     -s, --STARReference: The reference folder of STAR. The reference should be built before running scFusion. 
-    
+
 Parameters with default value, but should be change for your setting: 
 
     -g, --Genome: The genome reference file (*.fasta or *.fa), default is the 'hg19.fa' in the data folder
@@ -102,8 +96,8 @@ Parameters with default value, but should be change for your setting:
     
     -v, --PvalueCutoff: Pvalue(FDR) cutoff of the statistical model, default is 0.05
     
-    -N, --NetworkCutoff: Network classification probability cutoff, default is 0.75
-    
+    -n, --NetworkCutoff: Network classification probability cutoff, default is 0.75
+
 Step Controls:
 
     --SkipMapping: Skip STAR Mapping, if you already have the mapping result at OutDir/StarMapping/
