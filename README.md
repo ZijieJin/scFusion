@@ -26,7 +26,7 @@ The software below should be in your PATH.
 
 - 8 CPU cores or more for each task 
 
-## Minimum (normal version)
+## Minimum 
 
 - 64 GB Memory 
 
