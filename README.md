@@ -1,6 +1,6 @@
 # scFusion
 
-scFusion is a computational pipeline for detecting gene fusions at single-cell resolution. 
+scFusion is a computational pipeline for detecting gene fusions at single-cell resolution. scFusion works on Linux/Mac OS.
 
 ## Software Prerequisite
 
@@ -20,17 +20,17 @@ The software below should be in your PATH.
 - python module: pysam
 
 
-## Recommend
+## Recommend 
 
 - 64 GB memory or more for each task
 
-- 200 CPU cores or more
+- 8 CPU cores or more for each task 
 
-## Minimum
+## Minimum (normal version)
 
-- 64 GB Memory
+- 64 GB Memory 
 
-- 8 CPU cores
+- 4 CPU cores
 
 ## Optional
 
@@ -38,7 +38,7 @@ The software below should be in your PATH.
 
 ## Data Requirement
 
-- A series of single cell sequencing files, renamed with numbers, recommended with continuous numbers. (*_1.fastq, *_2.fastq) (like 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq)
+- Single cell RNA sequencing files, named with numbers (better with consecutive numbers). (*_1.fastq, *_2.fastq) (e.g. 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq)
 
 - STAR reference dataset(Please build it, see [Section 2 of STARManual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf))
 
@@ -54,7 +54,7 @@ Two versions of scFusion are included. The normal version (scFusion.py) runs the
 
 Example:
 
-If there are 300 sequencing data files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 200 cores are available, please run:
+If 300 pairs of files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 200 cores are available, please run:
 
 `python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 200`
 
@@ -66,7 +66,7 @@ The results are shown on the folder: testout/FinalResult/FinalOutput*
 
 ### Expected running time
 
-The running on the test data with 10 cells should be finished in 10 minites on an 8-core computer.
+Running the test data of 10 cells costs about 10 minutes on an 8-core computer.
 
 ## Command Line Options
 
