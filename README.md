@@ -38,7 +38,7 @@ The software below should be in your PATH.
 
 ## Data Requirement
 
-- Single cell RNA sequencing files, named with numbers (better with consecutive numbers). (*_1.fastq, *_2.fastq) (e.g. 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq) **The filenames must be *_1.fastq and *_2.fastq. *_1.fq is not allowed.**
+- Single cell RNA sequencing files, named with numbers (better with consecutive numbers). (*_1.fastq, *_2.fastq) (e.g. 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq) **The filenames must be \*_1.fastq and \*_2.fastq. \*_1.fq is not allowed.**
 
 - STAR reference dataset(Please build it, see [Section 2 of STARManual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf))
 
