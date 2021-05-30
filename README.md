@@ -38,7 +38,7 @@ The software below should be in your PATH.
 
 ## Data Requirement
 
-- Single cell RNA sequencing files, named with numbers (better with consecutive numbers). (*_1.fastq, *_2.fastq) (e.g. 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq)
+- Single cell RNA sequencing files, named with numbers (better with consecutive numbers). (*_1.fastq, *_2.fastq) (e.g. 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq) **The filenames must be *_1.fastq and *_2.fastq. *_1.fq is not allowed.**
 
 - STAR reference dataset(Please build it, see [Section 2 of STARManual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf))
 
@@ -46,7 +46,7 @@ The software below should be in your PATH.
 
 - GTF annotation file (*.gtf) (Can be obtained from Ensembl (ftp://ftp.ensembl.org/pub/), NCBI, or UCSC)
 
-- [Mappabilityfile](https://genome.ucsc.edu/cgi-bin/hgTables) (Can be obtained from UCSC)
+- [Mappabilityfile](https://genome.ucsc.edu/cgi-bin/hgTables) (Can be obtained from UCSC) **If you are using the hg38 version of mappability file, please ensure the file format is the same with hg19's. (Only 4 columns. chr, start, end, value)**
 
 ## Usage
 
@@ -56,13 +56,13 @@ Two versions of scFusion are included. The normal version (scFusion.py) runs the
 
 Example:
 
-If 300 pairs of files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 200 cores are available, please run:
+If 300 pairs of files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 20 cores are available, please run:
 
-`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 200`
+`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20`
 
 or the job schedular version:
 
-`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 200`
+`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20`
 
 The results are shown on the folder: testout/FinalResult/FinalOutput*
 
