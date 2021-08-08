@@ -128,7 +128,6 @@ ChimericExprDic = {}
 GeneDictionary = {}
 HomologyDic = {}
 good_dist = 1
-EnableClustering = False
 goodcount = 0
 prefix = ''
 if argnum == 7:
@@ -141,23 +140,6 @@ CandidateList = []
 CandidateVector = {}
 
 
-
-if argnum == 8:
-    EnableClustering = True
-    ClusteringFile = open(sys.argv[7])
-    for line in ClusteringFile.readlines():
-        if line[0] == '#':
-            continue
-        info = line.split('\t')
-        cellname = info[0]
-        cluster = info[1]
-        Clusters[cellname] = cluster
-        if cluster in ClusterSize:
-            ClusterSize[cluster] += 1
-        else:
-            ClusterSize[cluster] = 1
-        ClusterCount[cluster] = 0  # this var is for the final output fusion categories.
-    ClusteringFile.close()
 for line in HomologyResultFile.readlines():
     if line[0] == '#':
         continue
@@ -303,7 +285,7 @@ for i in range(int(start), int(last) + 1):
         for item in splitreadinfo:
             if len(item) > 3:
                 iteminfo = item.split('+')
-                if not 20 <= int(iteminfo[1]) <= readlength - 20:
+                if not 6 <= int(iteminfo[1]) <= readlength - 6:
                     continue
                 pos = iteminfo[0].split(',')
                 if pos[0] + ',' + pos[1] in Pos:
@@ -645,31 +627,6 @@ for gene in FusionMatrix:
                        FusionPos[gene][0][0] + '\t' + FusionPos[gene][0][1] + '\t' + str(FusionPos[gene][1][i][3][0]) + \
                        '\t' + str(FusionPos[gene][1][i][3][1]) + '\t' + str(i) + '\t' + homoscore + '\t' + \
                        gccontent[0] + '\t' + gccontent[1] + '\t' + str(aaaaa) + '\t' + str(bbbbb) + '\t' + read1 + '\t' + read2
-            if EnableClustering:
-                CluRes = ''
-                EffClu = []
-                cellset = FusionPos[gene][1][i][2]
-                for cell in cellset:
-                    ClusterCount[Clusters[cell]] += 1
-                cclist = []
-                for key in ClusterCount:
-                    ClusterCount[key] /= ClusterSize[key]
-                    cclist.append(ClusterCount[key])
-                if max(cclist) < 0.5:
-                    CluRes = "No_Spec_Clu"
-                else:
-                    for key in ClusterCount:
-                        if ClusterCount[key] > 0.5 * max(cclist):
-                            EffClu.append(key)
-                    if len(EffClu) == 1:
-                        CluRes = EffClu[0] + "_Spec"
-                    else:
-                        CluRes = "Share"
-                        for item in EffClu:
-                            CluRes += '_' + item
-                templine += '\t' + CluRes + '\n'
-            else:
-                templine += '\n'
             templines.append(templine)
 uselines = []
 for i in range(len(templines)):
@@ -716,7 +673,7 @@ for key in sorted(linedic, key=linedic.__getitem__, reverse=True):
     pos2 = info[9]
     if read.find('N') > -1:
         continue
-    if len(read) == 60:
+    if len(read) == 60 or True:
         readfile.write(read + '\t' + splitpos + '\t' + chromo1 + ':' + pos1 + ':' + info[-2] + '\t' + chromo2 + ':' +
                        pos2 + ':' + info[-1] + '\n')
         print(key)
