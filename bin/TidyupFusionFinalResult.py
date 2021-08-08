@@ -87,37 +87,5 @@ for line in uselines:
     pos1 = int(info[4].split(':')[1])
     pos2 = int(info[5].split(':')[1].rstrip('\n'))
     if CheckGoodGene(gene1, pos1, int(info[2])) and CheckGoodGene(gene2, pos2, int(info[2])) and gene1main != gene2main:
-        print(line[:-1], end='\t')
-        cellname = []
-        '''
-        filenames = os.listdir(FileDir)
-        for file in filenames:
-            if file.endswith('_FusionSupport.txt'):
-                thisfile = open(FileDir + file)
-                for thisline in thisfile.readlines():
-                    info = thisline.split('\t')
-                    found = False
-                    if len(info) == 8 and len(info[7]) > 3 and ((gene1 == info[0] and gene2 == info[1]) or (gene2 == info[0] and gene1 == info[1])):
-                        readsup = info[7].rstrip(';')
-                        splitinfo = readsup.split(';')
-                        for item in splitinfo:
-                            if len(item) <= 3:
-                                continue
-                            a = item.split('+')[0]
-                            pp = a.split(',')
-                            try:
-                                if abs(pos1 - int(pp[0])) < 5 and abs(pos2 - int(pp[1])) < 10 or abs(pos2 - int(pp[0])) < 5 and abs(pos1 - int(pp[1])) < 10:
-                                    cellname.append(int(file.split('_')[0]))
-                                    found = True
-                                    break
-                            except:
-                                sys.stderr.write(str(pos1) + '\t' + str(pos2) + '\t' + item)
-                    if found:
-                        break
-                thisfile.close()
-        cellname = sorted(cellname)
-        for item in cellname:
-            print(str(item), end=', ')
-        '''
-        print('')
+        print(line[:-1]）
 ResultFile.close()
