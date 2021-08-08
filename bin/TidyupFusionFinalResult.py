@@ -10,8 +10,6 @@ import os.path
 def CheckGoodGene(gene, pos, thiscount):
     if not FilteringSwitch:
         return True
-    if gene.find('IGH') > -1:
-        return True
     sum = 0
     for item in FusionGeneRecord[gene]:
         sum += item[1]
@@ -27,12 +25,15 @@ FilteringSwitch = True
 ResultFile = open(sys.argv[1])
 if len(sys.argv) > 2:
     FilteringSwitch = False
-PosRecord = []
+PosRecord = {}
 FusionGeneRecord = {}
+uselines = []
 for line in ResultFile.readlines():
     if line[0] == '#':
+        print(line[:-1] + '\tSupportingCells')
         continue
     if line.startswith('FusionName'):
+        print(line[:-1] + '\tSupportingCells')
         continue
     info = line.split('\t')
     pos1 = int(info[4].split(':')[1])
@@ -40,9 +41,12 @@ for line in ResultFile.readlines():
     gene = info[0].split('--')
     gene1 = gene[0]
     gene2 = gene[1]
-    if [info[5], info[4]] in PosRecord or [info[4], info[5]] in PosRecord:
+    '''
+    if info[5] + '--' + info[4] in PosRecord or info[4] + '--' + info[5] in PosRecord:
         continue
-    PosRecord.append([info[4], info[5]])
+    '''
+    PosRecord[info[4] + '--' + info[5]] = 0
+    uselines.append(line)
     if gene1 not in FusionGeneRecord:
         FusionGeneRecord[gene1] = [[pos1, int(info[2]), 1]]
     else:
@@ -68,18 +72,13 @@ for line in ResultFile.readlines():
         if not near:
             FusionGeneRecord[gene2].append([pos2, int(info[2]), 1])
 ResultFile.close()
-ResultFile = open(sys.argv[1])
 PosRecord = []
-for line in ResultFile.readlines():
+for line in uselines:
     if line[0] == '#':
-        print(line[:-1] + '\tSupportingCells')
         continue
     if line.startswith('FusionName'):
         continue
     info = line.split('\t')
-    if [info[5], info[4]] in PosRecord or [info[4], info[5]] in PosRecord:
-        continue
-    PosRecord.append([info[4], info[5]])
     gene = info[0].split('--')
     gene1 = gene[0]
     gene2 = gene[1]

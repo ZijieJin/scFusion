@@ -9,6 +9,7 @@ infile = open(sys.argv[1])
 refannotfile = open(sys.argv[2])
 ChimericOutDir = sys.argv[3]
 OutPrefix = sys.argv[4]
+nodetailcell = sys.argv[5]
 outfull = open(OutPrefix + '.full.txt', 'w')
 outabridge = open(OutPrefix + '.abridged.txt', 'w')
 genestrand = {}
@@ -104,54 +105,62 @@ for line in lines:
     direct2 = resinfo[10]
     try:
         strand1 = genestrand[fusiongene1]
-        strand2 = genestrand[fusiongene2]
+        if direct1 == strand1:
+            direct1 = 'd'
+        else:
+            direct1 = 'u'
     except KeyError:
-        continue
-    if direct1 == strand1:
-        direct1 = 'd'
-    else:
-        direct1 = 'u'
-    if direct2 == strand2:
-        direct2 = 'd'
-    else:
-        direct2 = 'u'
+        strand1 = 'N/A'
+        direct1 = 'N/A'
+    try:
+        strand2 = genestrand[fusiongene2]
+        if direct2 == strand2:
+            direct2 = 'd'
+        else:
+            direct2 = 'u'
+    except KeyError:
+        strand2 = 'N/A'
+        direct2 = 'N/A'
     anchor = []
     insertsize = []
     discordant = []
     splitreadnum = []
+    totalsplitread = 0
+    totaldiscordant = 0
     if len(repeatcount[fusiongene1][fusionpos1]) >= 5 or len(repeatcount[fusiongene2][fusionpos2]) >= 5:
         continue
-    for cellsupitem in cellsup:
-        if cellsupitem == '' or cellsupitem == ' ':
-            continue
-        try:
-            fsfile = open(ChimericOutDir + '/' + cellsupitem + '_FusionSupport.txt')
-            for fsline in fsfile.readlines():
-                info = fsline.rstrip().split('\t')
-                gene1 = info[0]
-                gene2 = info[1]
-                if gene1 == fusiongene1 and gene2 == fusiongene2 or gene1 == fusiongene2 and gene2 == fusiongene1:
-                    discordant.append(int(info[2]))
-                    if len(info) < 7:
-                        splitsup = []
-                    else:
-                        splitsup = info[6].split(';')
-                    splitcount = 0
-                    for item in splitsup:
-                        if item.find('+') == -1:
-                            continue
-                        thispos1 = int(item.split('+')[0].split(',')[0])
-                        thispos2 = int(item.split('+')[0].split(',')[1])
-                        if abs(thispos2 - fusionpos2) + abs(thispos1 - fusionpos1) < 30 or abs(
-                                thispos2 - fusionpos1) + abs(thispos1 - fusionpos2) < 30:
-                            splitcount += 1
-                    splitreadnum.append(splitcount)
-                    break
-        except IOError:
-            pass
-    totalsplitread = sum(splitreadnum)
-    totaldiscordant = sum(discordant)
-    cellsup = list(map(int, cellsup))
+    if nodetailcell != '1':
+        for cellsupitem in cellsup:
+            if cellsupitem == '' or cellsupitem == ' ':
+                continue
+            try:
+                fsfile = open(ChimericOutDir + '/' + cellsupitem + '_FusionSupport.txt')
+                for fsline in fsfile.readlines():
+                    info = fsline.rstrip().split('\t')
+                    gene1 = info[0]
+                    gene2 = info[1]
+                    if gene1 == fusiongene1 and gene2 == fusiongene2 or gene1 == fusiongene2 and gene2 == fusiongene1:
+                        discordant.append(int(info[2]))
+                        if len(info) < 7:
+                            splitsup = []
+                        else:
+                            splitsup = info[6].split(';')
+                        splitcount = 0
+                        for item in splitsup:
+                            if item.find('+') == -1:
+                                continue
+                            thispos1 = int(item.split('+')[0].split(',')[0])
+                            thispos2 = int(item.split('+')[0].split(',')[1])
+                            if abs(thispos2 - fusionpos2) + abs(thispos1 - fusionpos1) < 30 or abs(
+                                    thispos2 - fusionpos1) + abs(thispos1 - fusionpos2) < 30:
+                                splitcount += 1
+                        splitreadnum.append(splitcount)
+                        break
+            except IOError:
+                pass
+        totalsplitread = sum(splitreadnum)
+        totaldiscordant = sum(discordant)
+        cellsup = list(map(int, cellsup))
     currentid += 1
     outabridge.write(str(currentid) + '\t' + resinfo[0] + '\t' + resinfo[4] + '\t' + resinfo[
         5] + '\t' + strand1 + '/' + strand2 + '\t' + direct1 + '/' + direct2 + '\t' +
