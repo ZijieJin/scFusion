@@ -50,6 +50,8 @@ The software below should be in your PATH.
 
 ## Usage
 
+First, unzip the hg19mappability file in the data folder.
+
 Two versions of scFusion are included. The normal version (scFusion.py) runs the whole pipeline, while the job schedular version gives you a series of commands that you can run them with your job schedular's configuration. We recommend you using the job schedular version, since it can make use of all the available computational resources. 
 
 Example:
