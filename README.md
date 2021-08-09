@@ -11,7 +11,7 @@ The software below should be in your PATH.
 - bedtools
 - python 3
 - R >= 3.5 (tested on 3.5.1, 3.6.0, 4.0.2)
-
+- R package: stringr
 - python module: tensorflow (tested on version 2.3.0)
 - python module: keras (tested on version 2.4.3)
 - python module: [pyensembl](https://github.com/openvax/pyensembl)
