@@ -21,16 +21,20 @@ def CheckGoodGene(gene, pos):
     return False
 
 FilteringSwitch = True
+FindSupCell = True
 ResultFile = open(sys.argv[1])
 if len(sys.argv) > 3:
     FilteringSwitch = False
 FileDir = sys.argv[2]
-PosRecord = []
+PosRecord = {}
 FusionGeneRecord = {}
+uselines = []
 for line in ResultFile.readlines():
     if line[0] == '#':
+        print(line[:-1] + '\tSupportingCells')
         continue
     if line.startswith('FusionName'):
+        print(line[:-1] + '\tSupportingCells')
         continue
     info = line.split('\t')
     pos1 = int(info[4].split(':')[1])
@@ -38,9 +42,12 @@ for line in ResultFile.readlines():
     gene = info[0].split('--')
     gene1 = gene[0]
     gene2 = gene[1]
-    if [info[5], info[4]] in PosRecord or [info[4], info[5]] in PosRecord:
+    '''
+    if info[5] + '--' + info[4] in PosRecord or info[4] + '--' + info[5] in PosRecord:
         continue
-    PosRecord.append([info[4], info[5]])
+    '''
+    PosRecord[info[4] + '--' + info[5]] = 0
+    uselines.append(line)
     if gene1 not in FusionGeneRecord:
         FusionGeneRecord[gene1] = [[pos1, int(info[2]), 1]]
     else:
@@ -66,18 +73,36 @@ for line in ResultFile.readlines():
         if not near:
             FusionGeneRecord[gene2].append([pos2, int(info[2]), 1])
 ResultFile.close()
-ResultFile = open(sys.argv[1])
-PosRecord = []
-for line in ResultFile.readlines():
+
+
+FusionRecCells = {}
+filecount = 0
+filenames = os.listdir(FileDir)
+for file in filenames:
+    if file.endswith('_FusionSupport.txt'):
+        thisfile = open(FileDir + file)
+        filecount += 1
+        cellindex = int(file.split('_')[0])
+        FusionRecCells[cellindex] = {}
+        for thisline in thisfile.readlines():
+            info = thisline.split('\t')
+            found = False
+            if len(info) == 7:
+                readsup = info[6].rstrip(';')
+                splitinfo = readsup.split(';')
+                FusionRecCells[cellindex][info[0] + '--' + info[1]] = splitinfo
+            elif len(info) == 6:
+                FusionRecCells[cellindex][info[0] + '--' + info[1]] = []
+        thisfile.close()
+
+
+
+for line in uselines:
     if line[0] == '#':
-        print(line[:-1] + '\tSupportingCells')
         continue
     if line.startswith('FusionName'):
         continue
     info = line.split('\t')
-    if [info[5], info[4]] in PosRecord or [info[4], info[5]] in PosRecord:
-        continue
-    PosRecord.append([info[4], info[5]])
     gene = info[0].split('--')
     gene1 = gene[0]
     gene2 = gene[1]
@@ -86,36 +111,32 @@ for line in ResultFile.readlines():
     if CheckGoodGene(gene1, pos1) and CheckGoodGene(gene2, pos2):
         print(line[:-1], end='\t')
         cellname = []
-        filenames = os.listdir(FileDir)
-        for file in filenames:
-            if file.endswith('_FusionSupport.txt'):
-                thisfile = open(FileDir + file)
-                for thisline in thisfile.readlines():
-                    info = thisline.split('\t')
-                    found = False
-                    if len(info) == 7 and len(info[6]) > 3 and ((gene1 == info[0] and gene2 == info[1]) or (gene2 == info[0] and gene1 == info[1])):
-                        readsup = info[6].rstrip(';')
-                        splitinfo = readsup.split(';')
-                        for item in splitinfo:
-                            if len(item) <= 3:
-                                continue
-                            a = item.split('+')[0]
-                            pp = a.split(',')
-                            try:
-                                if abs(pos1 - int(pp[0])) < 10 and abs(pos2 - int(pp[1])) < 10 or abs(pos2 - int(pp[0])) < 10 and abs(pos1 - int(pp[1])) < 10:
-                                    cellname.append(int(file.split('_')[0]))
-                                    found = True
-                                    break
-                            except:
-                                sys.stderr.write(str(pos1) + '\t' + str(pos2) + '\t' + item)
-                    elif len(info) == 6:
-                        if gene1 == info[0] and gene2 == info[1] or gene2 == info[0] and gene1 == info[1]:
-                            cellname.append(int(file.split('_')[0]))
-                    if found:
-                        break
-                thisfile.close()
+        for cell in FusionRecCells:
+            if gene1 + '--' + gene2 in FusionRecCells[cell]:
+                key = gene1 + '--' + gene2
+            elif gene2 + '--' + gene1 in FusionRecCells[cell]:
+                key = gene2 + '--' + gene1
+            else:
+                continue
+            if FusionRecCells[cell][key] == []:
+                cellname.append(cell)
+            else:
+                for item in FusionRecCells[cell][key]:
+                    if len(item) <= 3:
+                        continue
+                    a = item.split('+')[0]
+                    pp = a.split(',')
+                    try:
+                        if abs(pos1 - int(pp[0])) < 10 and abs(pos2 - int(pp[1])) < 10 or abs(pos2 - int(pp[0])) < 10 and abs(pos1 - int(pp[1])) < 10:
+                            cellname.append(cell)
+                            break
+                    except:
+                        sys.stderr.write(str(pos1) + '\t' + str(pos2) + '\t' + item)
         cellname = sorted(cellname)
-        for item in cellname:
-            print(str(item), end=', ')
+        if cellname == []:
+            print('NoSupCell', end='')
+        else:
+            for item in cellname:
+                print(str(item), end=', ')
         print('')
 ResultFile.close()

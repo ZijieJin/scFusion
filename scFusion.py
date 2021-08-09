@@ -23,7 +23,7 @@ def help():
     print('-t, --Thread: Number of threads, at least 4, default is 8')
     print('-l, --LimitThread: Number of maximum threads allowed for each STAR mapping task, default is 20')
     print('-w, --Weight: The weight file of the deep-learning network, default is weight-V9-2.hdf5 in the data folder')
-    print('-E, --Epoch: The number of epochs in the retraining step between 3 and 999, default is 100')
+    print('-E, --Epoch: The number of epochs in the retraining step between 3 and 999, default is 10')
     print('-p, --Prefix: The prefix of result file, default is blank')
     print('-v, --PvalueCutoff: Pvalue cutoff, default is 0.05')
     print('-n, --NetworkCutoff: Network score cutoff, default is 0.75')
@@ -78,7 +78,7 @@ try:
     weightfilepath = codedir + '../data/weight-V9-2.hdf5'
     pv = 0.05
     FakeProb = 0.75
-    epoch = 100
+    epoch = 10
     prefix = '.'
     start = -10000000
     end = -10000000
