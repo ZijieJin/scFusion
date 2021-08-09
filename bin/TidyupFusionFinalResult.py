@@ -87,5 +87,5 @@ for line in uselines:
     pos1 = int(info[4].split(':')[1])
     pos2 = int(info[5].split(':')[1].rstrip('\n'))
     if CheckGoodGene(gene1, pos1, int(info[2])) and CheckGoodGene(gene2, pos2, int(info[2])) and gene1main != gene2main:
-        print(line[:-1]）
+        print(line[:-1])
 ResultFile.close()
