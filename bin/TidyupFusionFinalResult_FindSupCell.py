@@ -83,7 +83,6 @@ for file in filenames:
         thisfile = open(FileDir + file)
         filecount += 1
         cellindex = int(file.split('_')[0])
-        sys.stderr.write(str(cellindex) + '\n')
         FusionRecCells[cellindex] = {}
         for thisline in thisfile.readlines():
             info = thisline.split('\t')
