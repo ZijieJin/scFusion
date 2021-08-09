@@ -58,11 +58,11 @@ Example:
 
 If 300 pairs of files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 20 cores are available, please run:
 
-`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20`
+`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20 -g hg19.fa -a ref_annot.gtf`
 
 or the job schedular version:
 
-`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20`
+`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20 -g hg19.fa -a ref_annot.gtf`
 
 The results are shown on the folder: testout/FinalResult/FinalOutput*
 
