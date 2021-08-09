@@ -11,7 +11,7 @@ The software below should be in your PATH.
 - bedtools
 - python 3
 - R >= 3.5 (tested on 3.5.1, 3.6.0, 4.0.2)
-- R package: stringr
+
 - python module: tensorflow (tested on version 2.3.0)
 - python module: keras (tested on version 2.4.3)
 - python module: [pyensembl](https://github.com/openvax/pyensembl)
@@ -50,7 +50,7 @@ The software below should be in your PATH.
 
 ## Usage
 
-First, unzip the hg19mappability file in the data folder.
+First, uncompress the zip file in data/badgene/
 
 Two versions of scFusion are included. The normal version (scFusion.py) runs the whole pipeline, while the job schedular version gives you a series of commands that you can run them with your job schedular's configuration. We recommend you using the job schedular version, since it can make use of all the available computational resources. 
 
