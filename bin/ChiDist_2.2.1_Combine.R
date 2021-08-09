@@ -363,7 +363,6 @@ fusioncandidateread = data.frame(
 )
 fusioncandidate = rep('', totalnumfusion)
 for (i in 1:totalnumfusion) {
-  print(i)
   fusioncandidate[i] = paste(data$V1[i], data$V2[i], sep = '--')
 }
 allresult$FusionName = fusioncandidate
@@ -380,9 +379,6 @@ spanningfragcount = rep(0, totalnumfusion)
 pos1 = rep('', totalnumfusion)
 pos2 = rep('', totalnumfusion)
 for (i in 1:totalnumfusion) {
-  if (i %% 10000 == 0){
-    print(i)
-  }
   if (as.numeric(data$V5[i]) == 0) {
     spanningfragcount[i] = 0
   } else{
