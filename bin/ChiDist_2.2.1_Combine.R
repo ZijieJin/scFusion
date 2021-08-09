@@ -1,5 +1,5 @@
 ## README ####
-### V 2.2.0
+### V 2.2.1
 ### 去掉similarity的部分
 ##############
 
@@ -47,9 +47,6 @@ CalcPValueZINB_Fusion_2.0.0_3 = function(par)
 {
   Pv = rep(0, dim(data)[1])
   for (i in 1:dim(data)[1]){
-    if (i %% 10000 == 0){
-      print(i)
-    }
     cc = as.numeric(stringr::str_split(stringr::str_sub(data$V4[i], 2, -2), ', ')[[1]])
     if (sum(cc) <= 3 | data$V3[i] <= 1){
       Pv[i] = 1
