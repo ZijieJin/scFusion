@@ -39,11 +39,11 @@ for line in FileText:
                 genecount[cmbgepos(gene2, pos2)] += 1
             else:
                 genecount[cmbgepos(gene2, pos2)] = 1
-            if cmbgepos(pos1, pos2) in pospair:
+            if cmbgepos(gene1, gene2) in pospair or cmbgepos(gene2, gene1) in pospair:
                 genecount[cmbgepos(gene1, pos1)] -= 1
                 genecount[cmbgepos(gene2, pos2)] -= 1
             else:
-                pospair.append(cmbgepos(pos1, pos2))
+                pospair.append(cmbgepos(gene1, gene2))
         else:
             if cmbgepos(gene1, pos1) not in genecount:
                 genecount[cmbgepos(gene1, pos1)] = 0
@@ -52,7 +52,7 @@ for line in FileText:
         linestore[line] = [cmbgepos(gene1, pos1), cmbgepos(gene2, pos2)]
 FusionScoreFile.close()
 for key in linestore:
-    if genecount[linestore[key][0]] <= 5 and genecount[linestore[key][1]] <= 5:
+    if genecount[linestore[key][0]] <= 15 and genecount[linestore[key][1]] <= 15:
         filteredstore[key] = float(key.split('\t')[2])
 for key in sorted(filteredstore, key=filteredstore.__getitem__, reverse=True):
     print(key, end='')

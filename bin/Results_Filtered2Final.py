@@ -12,33 +12,21 @@ import numpy
 resultfile = open(sys.argv[1])
 Pvaluethres = float(sys.argv[2])
 probthres = float(sys.argv[3])
-totalcellnum = min(int(sys.argv[4]), 1000)
+totalcellnum = min(int(sys.argv[4]), 500)
 
-BadPair = []
-BadSingle = []
-BadFileDir = sys.argv[5]
-for i in range(18):
-    thisbadfile = open(BadFileDir + str(i + 1) + '.txt')
-    for line in thisbadfile.readlines():
-        info = line.rstrip().split('\t')
-        if len(info) == 2:
-            BadPair.append([info[0], info[1]])
-        else:
-            BadSingle.append(info[0])
-    thisbadfile.close()
-BadSingle = list(set(BadSingle))
+
 resultfilelines = resultfile.readlines()
 goodpv = []
 badpv = []
 FDRDict = {}
 setpcutoff = False
-threspv = 7
+threspv = 20
 setthrespv = False
 for line in resultfilelines:
     if line.startswith('Fusion'):
         continue
     info = line.rstrip().split('\t')
-    if (int(info[2]) / int(info[1])) < 1.25 or int(info[1]) < max(5, totalcellnum / 100):
+    if (int(info[2]) / int(info[1])) < 1.25 or int(info[1]) < 5:
         badpv.append(float(info[7]))
     else:
         goodpv.append(float(info[7]))
@@ -54,6 +42,7 @@ for l in range(1000):
         if p < pcutoff:
             smallbadpv += 1
     aaa = smallbadpv / max(1, len(badpv)) * (len(goodpv) + len(badpv)) / max(1, smallgoodpv + smallbadpv)
+    #sys.stderr.write(str(aaa) + '\n')
     if aaa < Pvaluethres and not setpcutoff:
         threspv = l + 0.5
         FDRDict[l] = aaa
@@ -64,6 +53,13 @@ for l in range(1000):
         FDRDict[l] = min(aaa, FDRDict[-1])
         FDRDict[-1] = FDRDict[l]
     
+
+
+if len(sys.argv) > 5:
+    threspv = float(sys.argv[5])
+    for i in range(1000):
+        FDRDict[i] = pow(10, -i)
+
 
 for line in resultfilelines:
     if line.startswith('Fusion'):

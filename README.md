@@ -4,14 +4,14 @@ scFusion is a computational pipeline for detecting gene fusions at single-cell r
 
 ## Software Prerequisite
 
-The software below should be in your PATH.
+The software below should be in your PATH. **(They can all be installed by conda and pip)**
 
 - [STAR](https://github.com/alexdobin/STAR) >= 2.7.2d (tested on 2.7.2d and 2.7.8a)
 - samtools (tested on version 1.10)
 - bedtools
 - python 3
 - R >= 3.5 (tested on 3.5.1, 3.6.0, 4.0.2)
-
+- R package: stringr
 - python module: tensorflow (tested on version 2.3.0)
 - python module: keras (tested on version 2.4.3)
 - python module: [pyensembl](https://github.com/openvax/pyensembl)
@@ -50,7 +50,7 @@ The software below should be in your PATH.
 
 ## Usage
 
-First, uncompress the zip file in data/badgene/
+First, unzip the hg19mappability file in the data folder.
 
 Two versions of scFusion are included. The normal version (scFusion.py) runs the whole pipeline, while the job schedular version gives you a series of commands that you can run them with your job schedular's configuration. We recommend you using the job schedular version, since it can make use of all the available computational resources. 
 
@@ -58,11 +58,11 @@ Example:
 
 If 300 pairs of files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 20 cores are available, please run:
 
-`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20`
+`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20 -g hg19.fa -a ref_annot.gtf`
 
 or the job schedular version:
 
-`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20`
+`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20 -g hg19.fa -a ref_annot.gtf`
 
 The results are shown on the folder: testout/FinalResult/FinalOutput*
 
@@ -133,6 +133,20 @@ if the command is `sh scFusion_dev/bin/CombinePipeline_before_FS.sh testout/ 601
 
 then run `srun 1 20 sh scFusion_dev/bin/CombinePipeline_before_FS.sh testout/ 601 605 scFusion_dev/bin/../data/ref_annot.gtf scFusion_dev/bin/../data/hg19mappability75.txt scFusion_dev/bin/../data/exon_probe.hg19.gene.new.bed scFusion_dev/bin/`
 
+
+## Alternative installation
+
+The above installation is easy and we use Python, R and Shell to make scFusion easy to be used. All prerequsites can be installed by conda and pip. If you have trouble in the installation, we provide a Docker image that contains all software pre-installed for running scFusion. it is available here: https://hub.docker.com/r/jzj2035198/scfusion . 
+
+If you have docker installed, you can pull the image like so:
+
+`docker pull jzj2035198/scfusion`
+
+Below we assume all the required files and folders are in the directory XXX, run
+
+`docker run -v XXX:/data --rm jzj2035198/scfusion python /usr/local/src/scFusion-1.1/scFusion.py -f /data/testdata/ -o /data/testout/ -b 501 -e 800 -s /data/hg19StarIndex/ -t 20 -g /data/hg19.fa -a /data/ref_annot.gtf`
+
+The `XXX:/data` means you map the XXX folder to /data, so all your files and directories in XXX can be found in /data. 
 
 ## Note
 For non-academic use, please email Prof. Xi (ruibinxi@math.pku.edu.cn)
