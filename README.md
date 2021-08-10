@@ -134,5 +134,19 @@ if the command is `sh scFusion_dev/bin/CombinePipeline_before_FS.sh testout/ 601
 then run `srun 1 20 sh scFusion_dev/bin/CombinePipeline_before_FS.sh testout/ 601 605 scFusion_dev/bin/../data/ref_annot.gtf scFusion_dev/bin/../data/hg19mappability75.txt scFusion_dev/bin/../data/exon_probe.hg19.gene.new.bed scFusion_dev/bin/`
 
 
+## Alternative installation
+
+The above installation is easy and we use Python, R and Shell to make scFusion easy to be used. All prerequsites can be installed by conda and pip. If you have trouble in the installation, we provide a Docker image that contains all software pre-installed for running scFusion. it is available here: https://hub.docker.com/r/jzj2035198/scfusion . 
+
+If you have docker installed, you can pull the image like so:
+
+`docker pull jzj2035198/scfusion`
+
+Below we assume all the required files and folders are in the directory XXX, run
+
+`docker run -v XXX:/data --rm jzj2035198/scfusion python /usr/local/src/scFusion-1.1/scFusion.py -f /data/testdata/ -o /data/testout/ -b 501 -e 800 -s /data/hg19StarIndex/ -t 20 -g /data/hg19.fa -a /data/ref_annot.gtf`
+
+The `XXX:/data` means you map the XXX folder to /data, so all your files and directories in XXX can be found in /data. 
+
 ## Note
 For non-academic use, please email Prof. Xi (ruibinxi@math.pku.edu.cn)
