@@ -40,7 +40,6 @@ batch_size = 500
 Prob = model.predict(Tst_x,batch_size)
 Prob_rev = model.predict(Tst_x_rev,batch_size)
 AveProb = (Prob[:,0] + Prob_rev[:,0]) / 2
-
-sys.stderr.write(str(np.mean(AveProb)))
-sys.stderr.write('\n')
+for i in range(len(AveProb)):
+    outfile.write(str(Prob[i,0]) + '\t' + str(Prob_rev[i,0]) + '\t' + str(AveProb[i]) + '\n')
 outfile.close()
