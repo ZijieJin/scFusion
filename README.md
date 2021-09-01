@@ -66,9 +66,21 @@ or the job schedular version:
 
 The results are shown on the folder: testout/FinalResult/FinalOutput*
 
-### Expected running time
+## The test dataset
 
-Running the test data of 10 cells costs about 30 minutes on an 8-core computer.
+The test dataset helps you to check whether you have correctly installed scFusion. The testdata is only for installation checking, it does not have any biological meanings.
+
+### Command to run
+
+Please modify the command below with parameters fitting your environment.
+
+`python software/scFusion.py -f testdata/ -o testout/ -b 1 -e 10 -s hg19STARIndex/ -t 8 -n 0.9 -g hg19.fa -a ref_annot.gtf`
+
+### Expected running time and result
+
+Running the test data of 10 cells costs about 30 minutes (including the one-time file preparing time) on an 8-core computer.
+
+scFusion is expected to report IGHJ5-IGHA1 fusion in the testout/FinalResult/FinalOutput.abridged.txt file.
 
 ## Command Line Options
 
