@@ -107,7 +107,9 @@ Parameters with default values, but should be changed for your setting:
     -n, --NetworkCutoff: Network score cutoff, default is 0.75
     
 Step Controls:
-
+    
+    --Rename: Rename the files with consecutive indexes
+    
     --SkipMapping: Skip STAR Mapping, if you already have the mapping result at OutDir/StarMapping/
     
     --SkipBS: Skip the basic processing step, if you already have *_FusionSupport.txt at OutDir/ChimericOut/
