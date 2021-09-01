@@ -184,14 +184,22 @@ try:
         help()
         sys.exit()
     logfile = open(outdir + 'log.txt', 'w')
-    printlog('\nPreparing for scFusion!\n')
-    os.system('python ' + codedir + 'Addchr2gtf.py ' + gtffilepath + ' > ' + gtffilepath + '.added')
+    printlog('\nGenerating some necessary files!\n')
+    if not os.path.exists(gtffilepath + '.added'):
+        os.system('python ' + codedir + 'Addchr2gtf.py ' + gtffilepath + ' > ' + gtffilepath + '.added')
     gtffilepath = gtffilepath + '.added'
-    os.system('python ' + codedir + 'GetGenePos.py ' + gtffilepath + ' > ' + codedir + '/../data/GenePos.txt')
-    os.system('python ' + codedir + 'GetExonPos.py ' + gtffilepath + ' > ' + exonposfilepath)
+    if not os.path.exists(codedir + '/../data/GenePos.txt'):
+        os.system('python ' + codedir + 'GetGenePos.py ' + gtffilepath + ' > ' + codedir + '/../data/GenePos.txt')
+    if not os.path.exists(exonposfilepath):
+        os.system('python ' + codedir + 'GetExonPos.py ' + gtffilepath + ' > ' + exonposfilepath)
     for i in range(start, end + 1):
         if os.path.exists(filedir + str(i) + '_2.fastq'):
             cellindex.append(i)
+    if not SkipBS and not os.path.exists(gtffilepath[:-5] + 'db'):
+        aaa = subprocess.check_output(
+                'pyensembl install --reference-name GRCH37 --annotation-name my_genome_features --gtf ' + gtffilepath,
+                shell=True, stderr=subprocess.STDOUT)
+        logfile.write(str(aaa))
     numcell = len(cellindex)
     printlog('Parameter Check Complete!\n')
     os.system('mkdir -p ' + outdir + '/StarMapping/')
@@ -236,10 +244,6 @@ try:
         numcelleachtask = int(numpy.ceil(numcell / numtask))
         actualnumtask = int(numpy.ceil(numcell / numcelleachtask))
         threads = []
-        aaa = subprocess.check_output(
-            'pyensembl install --reference-name GRCH37 --annotation-name my_genome_features --gtf ' + gtffilepath,
-            shell=True, stderr=subprocess.STDOUT)
-        logfile.write(str(aaa))
         for j in range(actualnumtask):
             printlog('Start Basic Processing! Index: ' + str(cellindex[j * numcelleachtask]) + ' ~ ' + str(
                 min(cellindex[(j + 1) * numcelleachtask - 1], end)) + ', using core: 1\n')
