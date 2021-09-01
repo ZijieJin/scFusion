@@ -29,7 +29,7 @@ def help():
     print('-v, --PvalueCutoff: Pvalue cutoff, default is 0.05')
     print('-n, --NetworkCutoff: Network score cutoff, default is 0.75')
     print('Step Controls:')
-    print('--Rename: Rename the files with the continuous index')
+    print('--Rename: Rename the files with the consecutive indexes')
     print('--SkipMapping: Skip STAR Mapping, if you already have the mapping result at OutDir/StarMapping/')
     print('--SkipBS: Skip the basic processing step')
     print('--SkipCombining: Skip the combining step')
