@@ -98,7 +98,7 @@ Parameters with default values, but should be changed for your setting:
     
     -w, --Weight: The weight file of the deep-learning network, default is 'weight-V9-2.hdf5' in the data folder. If retraining is allowed, this file is the initial weight file of the network to be retrained; if the retraining step is skipped, this weight file is used in the predicting step.  
     
-    -E, --Epoch: The number of epochs in the retraining step between 3 and 999, default is 100
+    -E, --Epoch: The number of epochs in the retraining step between 3 and 999, default is 10
     
     -p, --Prefix: The prefix of result file, default is blank. This should be specified if users want to compare the results of different settings.
     
