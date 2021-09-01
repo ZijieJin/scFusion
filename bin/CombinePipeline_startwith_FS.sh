@@ -16,7 +16,6 @@ fi
 
 mkdir -p ${FilePath}/ChiDist/
 python ${codedir}/FusionScore.py ${FilePath}/ChimericOut/ ${mystart} ${myend} ${FilePath}/Expr/ > ${FilePath}/ChimericOut/${prefix}FusionScore.txt
-python ${codedir}/RmHighFreqGeneFusion.py ${FilePath}/ChimericOut/${prefix}FusionScore.txt > ${FilePath}/ChimericOut/${prefix}FusionScore_filtered.txt
-python ${codedir}/FindHomoPattern_RAM.py ${FilePath}/ChimericOut/${prefix}FusionScore_filtered.txt ${hg19file} ${gtf} > ${FilePath}/ChiDist/${prefix}Homo.txt
+python ${codedir}/FindHomoPattern_RAM.py ${FilePath}/ChimericOut/${prefix}FusionScore.txt ${hg19file} ${gtf} > ${FilePath}/ChiDist/${prefix}Homo.txt
 python ${codedir}/FindChiDist.py ${FilePath}/ChimericOut/ ${mystart} ${myend} ${FilePath}/Expr/ ${FilePath}/ChiDist/${prefix}Homo.txt ${prefix} > ${FilePath}/ChiDist/${prefix}ChiDist_middle.txt
 python ${codedir}/PreProcessing_SingleFile.py ${FilePath}/ChiDist/${prefix}FusionRead.txt ${prefix}

@@ -29,7 +29,7 @@ def help():
     print('-v, --PvalueCutoff: Pvalue cutoff, default is 0.05')
     print('-n, --NetworkCutoff: Network score cutoff, default is 0.75')
     print('Step Controls:')
-    print('--Rename: Rename the files with the continuous index')
+    print('--Rename: Rename the files with the consecutive indexes')
     print('--SkipMapping: Skip STAR Mapping, if you already have the mapping result at OutDir/StarMapping/')
     print('--SkipBS: Skip the basic processing step')
     print('--SkipCombining: Skip the combining step')
@@ -72,7 +72,7 @@ try:
     weightfilepath = codedir + '../data/weight-V9-2.hdf5'
     pv = 0.05
     FakeProb = 0.75
-    epoch = 100
+    epoch = 10
     prefix = '.'
     start = -10000000
     end = -10000000
@@ -181,16 +181,22 @@ try:
 
     print(
         "\nThe job schedular version of scFusion gives you the running commands,\n and you should apply them with your own job schedular's configurations\n")
-    print('\nPreparing for scFusion!\n')
-    os.system('python ' + codedir + 'Addchr2gtf.py ' + gtffilepath + ' > ' + gtffilepath + '.added')
+    printlog('\nGenerating some necessary files!\n')
+    if not os.path.exists(gtffilepath + '.added'):
+        os.system('python ' + codedir + 'Addchr2gtf.py ' + gtffilepath + ' > ' + gtffilepath + '.added')
     gtffilepath = gtffilepath + '.added'
-    os.system('python ' + codedir + 'GetGenePos.py ' + gtffilepath + ' > ' + codedir + '/../data/GenePos.txt')
-    os.system('python ' + codedir + 'GetExonPos.py ' + gtffilepath + ' > ' + exonposfilepath)
-    aaa = subprocess.check_output(
-        'pyensembl install --reference-name GRCH37 --annotation-name my_genome_features --gtf ' + gtffilepath, shell=True, stderr=subprocess.STDOUT)
+    if not os.path.exists(codedir + '/../data/GenePos.txt'):
+        os.system('python ' + codedir + 'GetGenePos.py ' + gtffilepath + ' > ' + codedir + '/../data/GenePos.txt')
+    if not os.path.exists(exonposfilepath):
+        os.system('python ' + codedir + 'GetExonPos.py ' + gtffilepath + ' > ' + exonposfilepath)
     for i in range(start, end + 1):
         if os.path.exists(filedir + str(i) + '_2.fastq'):
             cellindex.append(i)
+    if not SkipBS and not os.path.exists(gtffilepath[:-5] + 'db'):
+        aaa = subprocess.check_output(
+                'pyensembl install --reference-name GRCH37 --annotation-name my_genome_features --gtf ' + gtffilepath,
+                shell=True, stderr=subprocess.STDOUT)
+        logfile.write(str(aaa))
     numcell = len(cellindex)
     os.system('mkdir -p ' + outdir + '/StarMapping/\n')
     os.system('mkdir -p ' + outdir + '/ChimericOut/\n')

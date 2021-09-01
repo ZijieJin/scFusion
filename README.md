@@ -34,7 +34,7 @@ The software below should be in your PATH. **(They can all be installed by conda
 
 ## Optional
 
-- Job schedular (e.g. Slurm)
+- Job scheduler (e.g. Slurm)
 
 ## Data Requirement
 
@@ -46,39 +46,39 @@ The software below should be in your PATH. **(They can all be installed by conda
 
 - GTF annotation file (*.gtf) (Can be obtained from Ensembl (ftp://ftp.ensembl.org/pub/), NCBI, or UCSC)
 
-- [Mappabilityfile](https://genome.ucsc.edu/cgi-bin/hgTables) (Can be obtained from UCSC) **If you are using the hg38 version of mappability file, please ensure the file format is the same with hg19's. (Only 4 columns. chr, start, end, value)**
+- [Mappabilityfile](https://genome.ucsc.edu/cgi-bin/hgTables) (Can be obtained from UCSC) **If you are using the hg38 version of mappability file, please ensure the file format is the same as hg19's. (Only 4 columns. chr, start, end, value)**
 
 ## Usage
 
 First, unzip the hg19mappability file in the data folder.
 
-Two versions of scFusion are included. The normal version (scFusion.py) runs the whole pipeline, while the job schedular version gives you a series of commands that you can run them with your job schedular's configuration. We recommend you using the job schedular version, since it can make use of all the available computational resources. 
+Two versions of scFusion are included. The normal version (scFusion.py) runs the whole pipeline, while the job schedular version gives you a series of commands that you can run with your job schedular's configuration. We recommend you using the job scheduler version since it can make use of all the available computational resources. 
 
 Example:
 
-If 300 pairs of files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19StarIndex/, and 20 cores are available, please run:
+If 300 pairs of files (501_1.fastq, 501_2.fastq, 502_1.fastq, 502_2.fastq, ..., 800_1.fastq, 800_2.fastq) in the testdata/, and you want to save the results at testout/, and the STAR reference folder is hg19STARIndex/, and 20 cores are available, please run:
 
-`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20 -g hg19.fa -a ref_annot.gtf`
+`python software/scFusion.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19STARIndex/ -t 20 -g hg19.fa -a ref_annot.gtf`
 
 or the job schedular version:
 
-`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19StarIndex/ -t 20 -g hg19.fa -a ref_annot.gtf`
+`python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19STARIndex/ -t 20 -g hg19.fa -a ref_annot.gtf`
 
 The results are shown on the folder: testout/FinalResult/FinalOutput*
 
 ### Expected running time
 
-Running the test data of 10 cells costs about 10 minutes on an 8-core computer.
+Running the test data of 10 cells costs about 30 minutes on an 8-core computer.
 
 ## Command Line Options
 
 Parameters must be specified: 
 
-    -f, --FileDir: The folder of single cell sequencing files
+    -f, --FileDir: The folder of single-cell sequencing files
     
-    -b, --Begin: The first index of single cell sequencing file
+    -b, --Begin: The first index of single-cell sequencing file
     
-    -e, --End: The last index of single cell sequencing file
+    -e, --End: The last index of single-cell sequencing file
     
     -s, --STARReference: The reference folder of STAR. The reference should be built before running scFusion. 
     
@@ -90,24 +90,26 @@ Parameters with default values, but should be changed for your setting:
     
     -m, --Mappability: The mappability file, default is 'hg19mappability75.txt' in the data folder, left blank for keeping all reads
     
-    -o, --OutDir: The output folder of the results and temperal files, default is the same as FileDir
+    -o, --OutDir: The output folder of the results and temporal files, default is the same as FileDir
     
     -t, --Thread: Number of threads can be used, at least 4, default is 8. It tells the total available threads that scFusion can apply.
     
     -l, --LimitThread: Number of maximum threads allowed for each STAR mapping task, default is 20
     
-    -w, --Weight: The weight file of the deep-learning network, default is 'weight-V9-2.hdf5' in the data folder. If retraining is allowed, this file is the initial weight file of the network to be retrained; if retraining step is skipped, this weight file is used in the predicting step.  
+    -w, --Weight: The weight file of the deep-learning network, default is 'weight-V9-2.hdf5' in the data folder. If retraining is allowed, this file is the initial weight file of the network to be retrained; if the retraining step is skipped, this weight file is used in the predicting step.  
     
-    -E, --Epoch: The number of epochs in the retraining step between 3 and 999, default is 100
+    -E, --Epoch: The number of epochs in the retraining step between 3 and 999, default is 10
     
-    -p, --Prefix: The prefix of result file, default is blank. This should be specified if users want to compare results of different settings.
+    -p, --Prefix: The prefix of result file, default is blank. This should be specified if users want to compare the results of different settings.
     
     -v, --PvalueCutoff: Pvalue(FDR) cutoff of the statistical model, default is 0.05
     
     -n, --NetworkCutoff: Network score cutoff, default is 0.75
     
 Step Controls:
-
+    
+    --Rename: Rename the files with consecutive indexes
+    
     --SkipMapping: Skip STAR Mapping, if you already have the mapping result at OutDir/StarMapping/
     
     --SkipBS: Skip the basic processing step, if you already have *_FusionSupport.txt at OutDir/ChimericOut/
@@ -116,12 +118,12 @@ Step Controls:
     
     --SkipRetrain: Skip the retraining step, and apply the weights specified by -w to the network
     
-    --SkipPredict: Skip the predicting step using deep-learning network, if you already have the *ChiDist_filtered.txt at OutDir/ChiDist/
+    --SkipPredict: Skip the predicting step using the deep-learning network, if you already have the *ChiDist_filtered.txt at OutDir/ChiDist/
 
 
-## If you are using job schedular
+## If you are using a job scheduler
 
-Take Slurm as example. The simplest execution command is `srun 1 20 XXXXX`.
+Take Slurm as an example. The simplest execution command is `srun 1 20 XXXXX`.
 
 First, run the scFusion_js.py
 
@@ -136,7 +138,7 @@ then run `srun 1 20 sh scFusion_dev/bin/CombinePipeline_before_FS.sh testout/ 60
 
 ## Alternative installation
 
-The above installation is easy and we use Python, R and Shell to make scFusion easy to be used. All prerequsites can be installed by conda and pip. If you have trouble in the installation, we provide a Docker image that contains all software pre-installed for running scFusion. it is available here: https://hub.docker.com/r/jzj2035198/scfusion . 
+The above installation is easy and we use Python, R, and Shell to make scFusion easy to be used. All prerequisites can be installed by conda and pip. If you have trouble with the installation, we provide a Docker image that contains all software pre-installed for running scFusion. it is available here: https://hub.docker.com/r/jzj2035198/scfusion . 
 
 If you have docker installed, you can pull the image like so:
 
