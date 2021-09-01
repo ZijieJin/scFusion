@@ -68,7 +68,7 @@ The results are shown on the folder: testout/FinalResult/FinalOutput*
 
 ### Expected running time
 
-Running the test data of 10 cells costs about 20 minutes on an 8-core computer.
+Running the test data of 10 cells costs about 30 minutes on an 8-core computer.
 
 ## Command Line Options
 
