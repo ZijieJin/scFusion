@@ -1,6 +1,6 @@
 # scFusion
 
-scFusion is a computational pipeline for detecting gene fusions at single-cell resolution. scFusion works on Linux/Mac OS.
+scFusion is a computational pipeline for detecting gene fusions at single-cell resolution. scFusion works on Linux/Mac OS. If you have any questions related to scFusion, please visit https://github.com/ZijieJin/scFusion and post it on the Issues page.
 
 ## Software Prerequisite
 
