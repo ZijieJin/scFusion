@@ -98,19 +98,22 @@ def onethread(halfwindowwidth, fusionfile):
             geneinfo = info[8].split('; ')
             genename = ''
             genetype = ''
+            genetypeFound = False
             if len(geneinfo) > 4:
                 for item in geneinfo:
                     if item.find('gene_name') > -1:
                         genename = item[11:-1]
                     if item.find('gene_type') > -1:
                         genetype = item[11:-1]
+                        genetypeFound = True
                     if item.find('gene_biotype') > -1:
                         genetype = item[14:-1]
+                        genetypeFound = True
             else:
                 continue
-            if genetype == '' or genename == '':
+            if genename == '':
                 continue
-            if genetype != 'protein_coding' and genetype != 'processed_transcript':
+            if genetype != 'protein_coding' and genetype != 'processed_transcript' and genetypeFound:
                 continue
             if chromo not in geneset:
                 geneset[chromo] = {}
