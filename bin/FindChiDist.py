@@ -247,7 +247,7 @@ for i in range(int(start), int(last) + 1):
                         readinfo1 = info3
                         readinfo2 = info2
                     else:
-                        sys.stderr.write('!!!!!' + info1[1])
+                        #sys.stderr.write('!!!!!' + info1[1])
                         lines = [line]
                         lastname = thisname
                         readinfo2 = [1]
@@ -415,8 +415,13 @@ for i in range(int(start), int(last) + 1):
             gene = gene1 + '\t' + gene2
 
     for l in range(len(CandidateList)):
-        thischr1 = chr2num(CandidateList[l][2])
-        thischr2 = chr2num(CandidateList[l][3])
+        try:
+            aa = chr2num(CandidateList[l][2])
+            aa = chr2num(CandidateList[l][3])
+            thischr1 = chr2num(CandidateList[l][2])
+            thischr2 = chr2num(CandidateList[l][3])
+        except:
+            pass
         pos1 = int(CandidateList[l][4])
         pos2 = int(CandidateList[l][5])
         if thischr1 > thischr2 or (thischr1 == thischr2 and pos2 > pos1):
@@ -500,7 +505,12 @@ for i in range(int(start), int(last) + 1):
                             else:
                                 brkpnt2 = splitpnt2 - clipsplit2[2] + int(readinfo2[4]) + clipsplit2[4] - 1
                                 direct2 = '-'
-                            thisposlist = [chr2num(chromo1), chr2num(chromo2), brkpnt1, brkpnt2]
+                            try:
+                                aa = chr2num(chromo1)
+                                aa = chr2num(chromo2)
+                                thisposlist = [chr2num(chromo1), chr2num(chromo2), brkpnt1, brkpnt2]
+                            except:
+                                thisposlist = [chromo1, chromo2, brkpnt1, brkpnt2]
                             exchange = False
                             if thisposlist[0] > thisposlist[1] or (thisposlist[0] == thisposlist[1] and thisposlist[3] > thisposlist[2]):
                                 thisposlist = [thisposlist[1], thisposlist[0], thisposlist[3], thisposlist[2]]
@@ -631,8 +641,13 @@ for gene in FusionMatrix:
 uselines = []
 for i in range(len(templines)):
     info = templines[i].split('\t')
-    thischr1 = chr2num(info[6])
-    thischr2 = chr2num(info[7])
+    try:
+        aa = chr2num(info[6])
+        aa = chr2num(info[7])
+        thischr1 = chr2num(info[6])
+        thischr2 = chr2num(info[7])
+    except:
+        pass
     thispos1 = int(info[8])
     thispos2 = int(info[9])
     exchange = False
