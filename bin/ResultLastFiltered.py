@@ -67,13 +67,14 @@ for line in resultfile.readlines():
     pos2 = int(info[5].split(':')[1])
     flag = ['\t', '\t', '\t', '\t', '\t', '\t']
     if (genes[0].startswith('RP') and genes[0].find('-') > -1 and genes[0].find('.') > -1) or \
-            (genes[1].startswith('RP') and genes[1].find('-') > -1 and genes[1].find('.') > -1):
+            (genes[1].startswith('RP') and genes[1].find('-') > -1 and genes[1].find('.') > -1) or \
+            (genes[1].startswith('AC') and genes[1].find('.') > -1) or (genes[0].startswith('AC') and genes[0].find('.') > -1):
         flag[0] = '\tRP'
     if discordant / splitread > 10:
         flag[1] = '\tTooManyDiscordant'
-    if genedic[genes[0]][1] == genedic[genes[1]][1] and (abs(genedic[genes[0]][0] - genedic[genes[1]][0]) < 3 or not (genedic[genes[0]][2] > genedic[genes[1]][3] or genedic[genes[1]][2] > genedic[genes[0]][3])):
+    if genedic[genes[0]][1] == genedic[genes[1]][1] and (abs(genedic[genes[0]][0] - genedic[genes[1]][0]) < 3 or not (genedic[genes[0]][2] > genedic[genes[1]][3] or genedic[genes[1]][2] > genedic[genes[0]][3])) or genes[0] == genes[1]:
         flag[2] = '\tOverlap'
-    if genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genedic[genes[0]][4] == 'lncRNA' or genedic[genes[1]][4] == 'lncRNA':
+    if genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genedic[genes[0]][4] == 'lncRNA' or genedic[genes[1]][4] == 'lncRNA' or genes[0].startswith('LINC') or genes[1].startswith('LINC'):
         flag[3] = '\tlncRNA'
     if genedic[genes[0]][4] == 'pseudogene' or genedic[genes[1]][4] == 'pseudogene':
         flag[4] = '\tpseudogene'
