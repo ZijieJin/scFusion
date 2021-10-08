@@ -8,16 +8,16 @@ The software below should be in your PATH. **(They can all be installed by conda
 
 - [STAR](https://github.com/alexdobin/STAR) >= 2.7.2d (tested on 2.7.2d and 2.7.8a)
 - samtools (tested on version 1.10)
-- bedtools
+- bedtools (tested on version 2.29.2)
 - python 3
 - R >= 3.5 (tested on 3.5.1, 3.6.0, 4.0.2)
 - R package: stringr
 - python module: tensorflow (tested on version 2.3.0)
 - python module: keras (tested on version 2.4.3)
-- python module: [pyensembl](https://github.com/openvax/pyensembl)
-- python module: numpy
-- python module: scipy
-- python module: pysam
+- python module: [pyensembl](https://github.com/openvax/pyensembl) (tested on version 1.8.8)
+- python module: numpy (tested on version 1.18.5)
+- python module: scipy (tested on version 1.4.1 and 1.5.0)
+- python module: pysam (tested on version 0.16.0.1)
 
 
 ## Recommend 
@@ -161,6 +161,10 @@ Below we assume all the required files and folders are in the directory XXX, run
 `docker run -v XXX:/data --rm jzj2035198/scfusion python /usr/local/src/scFusion-1.1/scFusion.py -f /data/testdata/ -o /data/testout/ -b 501 -e 800 -s /data/hg19StarIndex/ -t 20 -g /data/hg19.fa -a /data/ref_annot.gtf`
 
 The `XXX:/data` means you map the XXX folder to /data, so all your files and directories in XXX can be found in /data. 
+
+## About the annotation file
+
+The annotation file (\*.gtf) may have different format, so making scFusion be compatible with all the formats is difficult. 'gene_name' is the gene name indicator in the annotation, and 'gene_type' or 'gene_biotype' are the gene type (pseudo gene or LncRNA). The annotation file containing only chr1-chrY can work best with scFusion.
 
 ## Note
 For non-academic use, please email Prof. Xi (ruibinxi@math.pku.edu.cn)
