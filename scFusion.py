@@ -321,5 +321,8 @@ try:
         logfile.write(str(aaa))
         printlog('Successfully rename files to original names!')
     printlog('All Finished!\n')
+    if prefix == '.':
+        prefix = ''
+    os.system('cat ' + outdir + '/' + prefix + 'FinalOutput.abridged.txt')
 except getopt.GetoptError:
     help()
