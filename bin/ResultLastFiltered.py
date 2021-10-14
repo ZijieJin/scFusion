@@ -62,8 +62,6 @@ for line in resultfile.readlines():
     discordant = int(info[3])
     pos1 = int(info[4].split(':')[1])
     pos2 = int(info[5].split(':')[1])
-    if pos1 + pos2 in posdict or pos2 + pos1 in posdict:
-        continue
     posdict[pos1 + pos2] = 1
     flag = ['\t', '\t', '\t', '\t', '\t', '\t']
     if (genes[0].find('RP') > -1 and genes[0].find('-') > -1 and genes[0].find('.') > -1) or \
