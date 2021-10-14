@@ -116,8 +116,8 @@ lastpar = rep(-100, 9)
 if (length(Args) >= 10){
   if (file.exists(Args[10])){
     load(Args[10])
+    lastpar = optres$par
   }
-  lastpar = optres$par
 }
 
 ### filter bad gc
