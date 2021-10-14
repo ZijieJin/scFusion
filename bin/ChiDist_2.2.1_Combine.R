@@ -1,6 +1,5 @@
 ## README ####
 ### V 2.2.1
-### 去掉similarity的部分
 ##############
 
 
@@ -64,7 +63,7 @@ CalcPValueZINB_Fusion_2.0.0_3 = function(par)
     gcpre = log(gcprelist[round(gc * 1000) + 1])
     numcellsup = length(cc)
     linpart = par[6] + par[7] * gcpre + par[8] * aveexpr1 + par[9] * aveexpr2
-    zeroprob = min(exp(linpart) / (1 + exp(linpart)), 0.998)
+    zeroprob = min(exp(linpart) / (1 + exp(linpart)), 0.9995)
     betamu = 1 - zeroprob
     betavar = betamu * (1 - betamu) / numcell
     myalpha = (betamu * (1 - betamu) / betavar - 1) * betamu
@@ -118,6 +117,7 @@ if (length(Args) >= 10){
   if (file.exists(Args[10])){
     load(Args[10])
   }
+  lastpar = optres$par
 }
 
 ### filter bad gc
@@ -176,9 +176,6 @@ dataexpmax = rep('', dim(data)[1])
 datagcmin = rep(0, dim(data)[1])
 datagcmax = rep(0, dim(data)[1])
 for (i in 1:dim(data)[1]) {
-  if (i %% 10000 == 0){
-    print(i)
-  }
   cc = as.numeric(stringr::str_split(stringr::str_sub(data$V4[i], 2, -2), ', ')[[1]])
   totalcount[i] = sum(cc)
   smallindex = which(cc <= 2)
@@ -325,15 +322,17 @@ if (norm(lastpar - rep(-100, 9), '2') <= 1){
 }
 
 
-print('Start Estimating Parameters!')
-if (norm(lastpar - rep(-100, 9), '2') == 0){
+
+if (norm(lastpar - rep(-100, 9), '2') < 1){
+  print('Start Estimating Parameters!')
   optres = optim(rnorm(9, mean=-0.4, sd=0.1), CalcZINB, control = list(maxit = 10000))
+  if (length(Args) >= 10){
+    save(optres, file = Args[10])
+  }
 }else{
-  optres = optim(optres$par, CalcZINB, control = list(maxit = 100))
+  print('Skip Estimating Parameters!')
 }
-if (length(Args) >= 10){
-  save(optres, file = Args[10])
-}
+
 
 print('Start Calculating P-values!')
 PvalueFusion23 = CalcPValueZINB_Fusion_2.0.0_3(optres$par)
