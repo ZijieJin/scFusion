@@ -77,13 +77,13 @@ for line in resultfile.readlines():
     if discordant / splitread > 10 or suppcells >= 100 and splitread / suppcells < 1.6:
         flag[1] = '\tTooManyDiscordant'
     if genedic[genes[0]][1] == genedic[genes[1]][1] and splitread / suppcells < 5 and (abs(genedic[genes[0]][0] - genedic[genes[1]][0]) < 2 or not (genedic[genes[0]][2] > genedic[genes[1]][3] or genedic[genes[1]][2] > genedic[genes[0]][3])) or genes[0] == genes[1]:
-        flag[1] = '\tOverlap'
+        flag[2] = '\tOverlap'
     if genedic[genes[0]][1] == genedic[genes[1]][1] and abs(pos1 - pos2) < 200000 and splitread < 150:
-        flag[1] = '\tOverlap'
+        flag[2] = '\tOverlap'
     if genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genes[0].startswith('LINC') or genes[1].startswith('LINC'):
-        flag[2] = '\tlncRNA'
+        flag[3] = '\tlncRNA'
     if genedic[genes[0]][4] == 'pseudogene' or genedic[genes[1]][4] == 'pseudogene':
-        flag[3] = '\tpseudogene'
+        flag[4] = '\tpseudogene'
     gene1exon = False
     gene2exon = False
     for item in exondic[genes[0]]:
