@@ -80,7 +80,8 @@ for line in resultfile.readlines():
         flag[2] = '\tOverlap'
     if genedic[genes[0]][1] == genedic[genes[1]][1] and abs(pos1 - pos2) < 200000 and splitread < 150:
         flag[2] = '\tOverlap'
-    if genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genes[0].startswith('LINC') or genes[1].startswith('LINC'):
+    if genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genedic[genes[0]][4] == 'lncRNA' or \
+            genedic[genes[1]][4] == 'lncRNA' or genes[0].startswith('LINC') or genes[1].startswith('LINC'):
         flag[3] = '\tlncRNA'
     if genedic[genes[0]][4] == 'pseudogene' or genedic[genes[1]][4] == 'pseudogene':
         flag[4] = '\tpseudogene'
