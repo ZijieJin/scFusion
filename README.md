@@ -64,7 +64,7 @@ or the job schedular version:
 
 `python software/scFusion_js.py -f testdata/ -o testout/ -b 501 -e 800 -s hg19STARIndex/ -t 20 -g hg19.fa -a ref_annot.gtf`
 
-The results are shown on the folder: testout/FinalResult/FinalOutput*
+The results are shown on the folder: testout/FinalOutput.abridged.txt and testout/FinalOutput.full.txt
 
 ## The test dataset
 
@@ -165,6 +165,8 @@ The `XXX:/data` means you map the XXX folder to /data, so all your files and dir
 ### To test docker
 
 run `docker run -v XXX:/data --rm jzj2035198/scfusion python -u /usr/local/src/scFusion-1.4/scFusion.py -f /usr/local/src/scFusion-1.4/Testdata/ -o /data/out/ -b 1 -e 10 -s /data/hg19StarIndex/ -t 20 -n 0.9`
+
+The result file locates at XXX/FinalOutput.abridged.txt or XXX/FinalResult/FinalOutput.abridged.txt
 
 ## About the annotation file
 
