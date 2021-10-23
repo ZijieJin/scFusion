@@ -323,6 +323,6 @@ try:
     printlog('All Finished!\n')
     if prefix == '.':
         prefix = ''
-    os.system('cat ' + outdir + '/' + prefix + 'FinalOutput.abridged.txt')
+    os.system('cat ' + outdir + '/FinalResult/' + prefix + 'FinalOutput.abridged.txt')
 except getopt.GetoptError:
     help()
