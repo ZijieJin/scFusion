@@ -158,9 +158,13 @@ If you have docker installed, you can pull the image like so:
 
 Below we assume all the required files and folders are in the directory XXX, run
 
-`docker run -v XXX:/data --rm jzj2035198/scfusion python /usr/local/src/scFusion-1.1/scFusion.py -f /data/testdata/ -o /data/testout/ -b 501 -e 800 -s /data/hg19StarIndex/ -t 20 -g /data/hg19.fa -a /data/ref_annot.gtf`
+`docker run -v XXX:/data --rm jzj2035198/scfusion python -u /usr/local/src/scFusion-1.4/scFusion.py -f /data/testdata/ -o /data/testout/ -b 501 -e 800 -s /data/hg19StarIndex/ -t 20 -g /data/hg19.fa -a /data/ref_annot.gtf`
 
 The `XXX:/data` means you map the XXX folder to /data, so all your files and directories in XXX can be found in /data. 
+
+### To test docker
+
+run `docker run -v XXX:/data --rm jzj2035198/scfusion python -u /usr/local/src/scFusion-1.4/scFusion.py -f /usr/local/src/scFusion-1.4/Testdata/ -o /data/out/ -b 1 -e 10 -s /data/hg19StarIndex/ -t 20 -n 0.9`
 
 ## About the annotation file
 
