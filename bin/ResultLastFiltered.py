@@ -27,6 +27,10 @@ for line in annot.readlines():
         if item.startswith('gene_name'):
             genename = item[11:-1]
             break
+    if genename == '':
+        for item in geneinfo:
+            if item.startswith('gene_id'):
+                genename = item[9:-1]
     if info[2] == 'exon':
         if genename != '':
             if genename not in exondic:
