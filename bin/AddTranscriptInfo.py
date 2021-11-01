@@ -47,6 +47,7 @@ for line in refannotfile.readlines():
         start = int(info[3])
         end = int(info[4])
         geneinfo = info[8].split('; ')
+        genename = ''
         if len(geneinfo) > 4:
             for item in geneinfo:
                 if item.find('gene_name') > -1:
@@ -55,12 +56,18 @@ for line in refannotfile.readlines():
                     genetype = item[11:-1]
                 if item.find('gene_biotype') > -1:
                     genetype = item[14:-1]
+            if genename == '':
+                for item in geneinfo:
+                    if item.find('gene_id') > -1:
+                        genename = item[9:-1]
         else:
             continue
         if genetype != 'protein_coding':
             continue
         if chromo not in geneset:
             geneset[chromo] = {}
+        if genename == '':
+            continue
         if genename not in geneset[chromo]:
             geneset[chromo][genename] = [[start, end], [[start, end]]]
         else:
