@@ -18,6 +18,7 @@ for line in reffile.readlines():
         start = info[3]
         end = info[4]
         geneinfo = info[8].split('; ')
+        genename = ''
         for item in geneinfo:
             if item.find('gene_name') > -1:
                 genename = item[11:-1]
