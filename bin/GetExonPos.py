@@ -18,14 +18,15 @@ for line in reffile.readlines():
         start = info[3]
         end = info[4]
         geneinfo = info[8].split('; ')
+        genename = ''
         for item in geneinfo:
-            if item.find('gene_id') > -1:
-                genename = item[9:-1]
             if item.find('gene_name') > -1:
                 genename = item[11:-1]
-            if item.find('gene_type') > -1:
-                genetype = item[11:-1]
-            if item.find('gene_biotype') > -1:
-                genetype = item[14:-1]
+        if genename == '':
+            for item in geneinfo:
+                if item.find('gene_id') > -1:
+                    genename = item[9:-1]
+        if genename == '':
+            continue
         if genename not in genenameset:
             print(chromo + '\t' + start + '\t' + end + '\t' + genename)
