@@ -1,6 +1,21 @@
 # scFusion [![DOI](https://zenodo.org/badge/321539482.svg)](https://zenodo.org/badge/latestdoi/321539482)
 
-scFusion is a computational pipeline for detecting gene fusions at single-cell resolution. scFusion works on Linux/Mac OS. If you have any questions related to scFusion, please visit https://github.com/ZijieJin/scFusion and post them on the *Issues* page.
+scFusion is a computational pipeline for detecting gene fusions at single-cell resolution. scFusion works on Linux/Mac OS. If you have any questions related to scFFROM jzj2035198/scfusion:latest
+
+MAINTAINER Zijie Jin
+
+RUN apt-get update -y \
+        && apt-get install -y git
+
+WORKDIR /usr/local/src/
+
+RUN git clone --recursive https://github.com/ZijieJin/scFusion.git
+
+RUN mv scFusion/bin/* scFusion-1.4/bin/ \
+        && mv scFusion/scFusion* scFusion-1.4/ \
+        && mv scFusion/ scFusion_old/ \
+        && mv scFusion-1.4/ scFusion/
+~                                          usion, please visit https://github.com/ZijieJin/scFusion and post them on the *Issues* page.
 
 ## Software Prerequisite
 
@@ -156,15 +171,17 @@ If you have docker installed, you can pull the image like so:
 
 `docker pull jzj2035198/scfusion`
 
+Or you can build the image using Docker/Dockerfile.
+
 Below we assume all the required files and folders are in the directory XXX, run
 
-`docker run -v XXX:/data --rm jzj2035198/scfusion python -u /usr/local/src/scFusion-1.4/scFusion.py -f /data/testdata/ -o /data/testout/ -b 501 -e 800 -s /data/hg19StarIndex/ -t 20 -g /data/hg19.fa -a /data/ref_annot.gtf`
+`docker run -v XXX:/data --rm jzj2035198/scfusion python -u /usr/local/src/scFusion/scFusion.py -f /data/testdata/ -o /data/testout/ -b 501 -e 800 -s /data/hg19StarIndex/ -t 20 -g /data/hg19.fa -a /data/ref_annot.gtf`
 
 The `XXX:/data` means you map the XXX folder to /data, so all your files and directories in XXX can be found in /data. 
 
 ### To test docker
 
-run `docker run -v XXX:/data --rm jzj2035198/scfusion python -u /usr/local/src/scFusion-1.4/scFusion.py -f /usr/local/src/scFusion-1.4/Testdata/ -o /data/out/ -b 1 -e 10 -s /data/hg19StarIndex/ -t 20 -n 0.9`
+run `docker run -v XXX:/data --rm jzj2035198/scfusion python -u /usr/local/src/scFusion/scFusion.py -f /usr/local/src/scFusion/Testdata/ -o /data/out/ -b 1 -e 10 -s /data/hg19StarIndex/ -t 20 -n 0.9`
 
 The result file locates at XXX/FinalOutput.abridged.txt or XXX/FinalResult/FinalOutput.abridged.txt
 
