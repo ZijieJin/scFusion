@@ -80,7 +80,7 @@ for line in resultfile.readlines():
         flag[1] = '\tTooManyDiscordant'
     if genedic[genes[0]][1] == genedic[genes[1]][1] and splitread / suppcells < 5 and (abs(genedic[genes[0]][0] - genedic[genes[1]][0]) < 2 or not (genedic[genes[0]][2] > genedic[genes[1]][3] or genedic[genes[1]][2] > genedic[genes[0]][3])) or genes[0] == genes[1]:
         flag[2] = '\tOverlap'
-    if genedic[genes[0]][1] == genedic[genes[1]][1] and abs(pos1 - pos2) < 200000 and splitread < 150:
+    if genedic[genes[0]][1] == genedic[genes[1]][1] and abs(pos1 - pos2) < 200000 and splitread < 150 and info[0].find('IGH') == -1:
         flag[2] = '\tOverlap'
     if genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genedic[genes[0]][4] == 'lncRNA' or \
             genedic[genes[1]][4] == 'lncRNA' or genes[0].startswith('LINC') or genes[1].startswith('LINC'):
