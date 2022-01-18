@@ -1,6 +1,6 @@
 FROM jzj2035198/scfusion:latest
 
-MAINTAINER Zijie Jin
+MAINTAINER Zijie Jin (jinzijie@pku.edu.cn)
 
 RUN apt-get update -y \
         && apt-get install -y git
