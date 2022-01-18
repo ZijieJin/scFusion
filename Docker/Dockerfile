@@ -1,6 +1,6 @@
 FROM jzj2035198/scfusion:latest
 
-MAINTAINER Zijie Jin (jinzijie@pku.edu.cn)
+MAINTAINER Zijie Jin
 
 RUN apt-get update -y \
         && apt-get install -y git
@@ -9,7 +9,7 @@ WORKDIR /usr/local/src/
 
 RUN git clone --recursive https://github.com/ZijieJin/scFusion.git
 
-RUN unzip scFusion/data/hg19mappability75.txt.zip -d scFusion/data/
-
-RUN mv scFusion-1.4/data/hg19.fa scFusion/data \
-        && mv scFusion-1.4/data/ref_annot.gtf scFusion/data/
+RUN mv scFusion/bin/* scFusion-1.4/bin/ \
+        && mv scFusion/scFusion* scFusion-1.4/ \
+        && mv scFusion/ scFusion_old/ \
+        && mv scFusion-1.4/ scFusion/
