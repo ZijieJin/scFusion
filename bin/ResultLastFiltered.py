@@ -15,6 +15,8 @@ genedic = {}
 linecount = 0
 exondic = {}
 annotgene = {}
+LINCoption = True
+NoApprovoption = True
 for line in annot.readlines():
     if line.startswith('#'):
         continue
@@ -68,13 +70,13 @@ for line in resultfile.readlines():
     pos2 = int(info[5].split(':')[1])
     posdict[pos1 + pos2] = 1
     flag = ['\t', '\t', '\t', '\t', '\t', '\t']
-    if (genes[0].find('RP') > -1 and genes[0].find('-') > -1 and genes[0].find('.') > -1) or \
+    if NoApprovoption and ((genes[0].find('RP') > -1 and genes[0].find('-') > -1 and genes[0].find('.') > -1) or \
             (genes[1].find('RP') > -1 and genes[1].find('-') > -1 and genes[1].find('.') > -1) or \
             (genes[0].find('A') > -1 and genes[0].find('.') > -1) or \
             (genes[1].find('A') > -1 and genes[1].find('.') > -1) or \
             genes[0].find('MT-') > -1 or genes[1].find('MT-') > -1 or \
             (genes[0].find('CT') > -1 and genes[0].find('-') > -1 and genes[0].find('.') > -1) or \
-            (genes[1].find('CT') > -1 and genes[1].find('-') > -1 and genes[1].find('.') > -1):
+            (genes[1].find('CT') > -1 and genes[1].find('-') > -1 and genes[1].find('.') > -1)):
         flag[0] = '\tRP'
     if discordant / splitread > 10 or suppcells >= 100 and splitread / suppcells < 1.6:
         flag[1] = '\tTooManyDiscordant'
@@ -82,8 +84,8 @@ for line in resultfile.readlines():
         flag[2] = '\tOverlap'
     if genedic[genes[0]][1] == genedic[genes[1]][1] and abs(pos1 - pos2) < 200000 and splitread < 150 and info[0].find('IGH') == -1:
         flag[2] = '\tOverlap'
-    if genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genedic[genes[0]][4] == 'lncRNA' or \
-            genedic[genes[1]][4] == 'lncRNA' or genes[0].startswith('LINC') or genes[1].startswith('LINC'):
+    if LINCoption and (genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genedic[genes[0]][4] == 'lncRNA' or \
+            genedic[genes[1]][4] == 'lncRNA' or genes[0].startswith('LINC') or genes[1].startswith('LINC')):
         flag[3] = '\tlncRNA'
     if genedic[genes[0]][4] == 'pseudogene' or genedic[genes[1]][4] == 'pseudogene':
         flag[4] = '\tpseudogene'
