@@ -229,7 +229,7 @@ try:
         print('Please run these commmands parallelly with your job schedular! \n(Hint: a for loop is helpful since '
               'these commands are the same except the cell index)\n--------------------------------------------')
         for j in range(actualnumtask):
-            RunBS(cellindex[j * numcelleachtask], min(cellindex[(j + 1) * numcelleachtask - 1], end))
+            RunBS(cellindex[j * numcelleachtask], min(cellindex[min((j + 1) * numcelleachtask - 1, numcell - 1)], end))
         print('--------------------------------------------\n\n')
 
     print('Please run the commands below one by one with your job schedular!')

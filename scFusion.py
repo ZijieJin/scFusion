@@ -246,9 +246,9 @@ try:
         threads = []
         for j in range(actualnumtask):
             printlog('Start Basic Processing! Index: ' + str(cellindex[j * numcelleachtask]) + ' ~ ' + str(
-                min(cellindex[(j + 1) * numcelleachtask - 1], end)) + ', using core: 1\n')
+                min(cellindex[min((j + 1) * numcelleachtask - 1, numcell - 1)], end)) + ', using core: 1\n')
             threads.append(threading.Thread(target=RunBS, args=(
-            cellindex[j * numcelleachtask], min(cellindex[(j + 1) * numcelleachtask - 1], end))))
+            cellindex[j * numcelleachtask], min(cellindex[min((j + 1) * numcelleachtask - 1, numcell - 1)], end))))
         for t in threads:
             t.start()
         while True:
@@ -321,5 +321,8 @@ try:
         logfile.write(str(aaa))
         printlog('Successfully rename files to original names!')
     printlog('All Finished!\n')
+    if prefix == '.':
+        prefix = ''
+    os.system('cat ' + outdir + '/FinalResult/' + prefix + 'FinalOutput.abridged.txt')
 except getopt.GetoptError:
     help()

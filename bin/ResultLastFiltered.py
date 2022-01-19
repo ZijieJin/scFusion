@@ -3,11 +3,6 @@ from __future__ import division
 import sys
 import os.path
 
-# ***** readme *****
-# 筛去一部分结果
-## RP开头，gene位置重叠或者紧挨
-# Discordant太多
-
 resultfile = open(sys.argv[1])
 geneposfile = open(sys.argv[2])
 outfilepath = sys.argv[3]
@@ -20,6 +15,8 @@ genedic = {}
 linecount = 0
 exondic = {}
 annotgene = {}
+LINCoption = True
+NoApprovoption = True
 for line in annot.readlines():
     if line.startswith('#'):
         continue
@@ -32,6 +29,10 @@ for line in annot.readlines():
         if item.startswith('gene_name'):
             genename = item[11:-1]
             break
+    if genename == '':
+        for item in geneinfo:
+            if item.startswith('gene_id'):
+                genename = item[9:-1]
     if info[2] == 'exon':
         if genename != '':
             if genename not in exondic:
@@ -56,24 +57,35 @@ if geneposfile2path != '':
         else:
             if genedic[info[0]][4] != 'pseudogene' and genedic[info[0]][4] != 'lincRNA':
                 genedic[info[0]][4] = info[4]
+posdict = {}
 for line in resultfile.readlines():
     if line.startswith('#'):
         continue
     info = line.split('\t')
     genes = info[0].split('--')
+    suppcells = int(info[1])
     splitread = int(info[2])
     discordant = int(info[3])
     pos1 = int(info[4].split(':')[1])
     pos2 = int(info[5].split(':')[1])
+    posdict[pos1 + pos2] = 1
     flag = ['\t', '\t', '\t', '\t', '\t', '\t']
-    if (genes[0].startswith('RP') and genes[0].find('-') > -1 and genes[0].find('.') > -1) or \
-            (genes[1].startswith('RP') and genes[1].find('-') > -1 and genes[1].find('.') > -1):
+    if NoApprovoption and ((genes[0].find('RP') > -1 and genes[0].find('-') > -1 and genes[0].find('.') > -1) or \
+            (genes[1].find('RP') > -1 and genes[1].find('-') > -1 and genes[1].find('.') > -1) or \
+            (genes[0].find('A') > -1 and genes[0].find('.') > -1) or \
+            (genes[1].find('A') > -1 and genes[1].find('.') > -1) or \
+            genes[0].find('MT-') > -1 or genes[1].find('MT-') > -1 or \
+            (genes[0].find('CT') > -1 and genes[0].find('-') > -1 and genes[0].find('.') > -1) or \
+            (genes[1].find('CT') > -1 and genes[1].find('-') > -1 and genes[1].find('.') > -1)):
         flag[0] = '\tRP'
-    if discordant / splitread > 10:
+    if discordant / splitread > 10 or suppcells >= 100 and splitread / suppcells < 1.6:
         flag[1] = '\tTooManyDiscordant'
-    if genedic[genes[0]][1] == genedic[genes[1]][1] and (abs(genedic[genes[0]][0] - genedic[genes[1]][0]) < 3 or not (genedic[genes[0]][2] > genedic[genes[1]][3] or genedic[genes[1]][2] > genedic[genes[0]][3])):
+    if genedic[genes[0]][1] == genedic[genes[1]][1] and splitread / suppcells < 5 and (abs(genedic[genes[0]][0] - genedic[genes[1]][0]) < 2 or not (genedic[genes[0]][2] > genedic[genes[1]][3] or genedic[genes[1]][2] > genedic[genes[0]][3])) or genes[0] == genes[1]:
         flag[2] = '\tOverlap'
-    if genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genedic[genes[0]][4] == 'lncRNA' or genedic[genes[1]][4] == 'lncRNA':
+    if genedic[genes[0]][1] == genedic[genes[1]][1] and abs(pos1 - pos2) < 200000 and splitread < 150 and info[0].find('IGH') == -1:
+        flag[2] = '\tOverlap'
+    if LINCoption and (genedic[genes[0]][4] == 'lincRNA' or genedic[genes[1]][4] == 'lincRNA' or genedic[genes[0]][4] == 'lncRNA' or \
+            genedic[genes[1]][4] == 'lncRNA' or genes[0].startswith('LINC') or genes[1].startswith('LINC')):
         flag[3] = '\tlncRNA'
     if genedic[genes[0]][4] == 'pseudogene' or genedic[genes[1]][4] == 'pseudogene':
         flag[4] = '\tpseudogene'

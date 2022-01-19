@@ -27,6 +27,7 @@ for line in refannotfile.readlines():
         end = int(info[4])
         strand = info[6]
         geneinfo = info[8].split('; ')
+        genename = ''
         for item in geneinfo:
             if item.startswith('gene_name'):
                 genename = item[11:-1]
@@ -34,6 +35,12 @@ for line in refannotfile.readlines():
                 genetype = item[11:-1]
             if item.startswith('gene_biotype'):
                 genetype = item[14:-1]
+        if genename == '':
+            for item in geneinfo:
+                if item.find('gene_id') > -1:
+                    genename = item[9:-1]
+        if genename == '':
+            continue
         genestrand[genename] = strand
 refannotfile.close()
 outabridge.write(
@@ -163,14 +170,25 @@ for line in lines:
         totaldiscordant = sum(discordant)
         cellsup = list(map(int, cellsup))
     currentid += 1
-    outabridge.write(str(currentid) + '\t' + resinfo[0] + '\t' + resinfo[4] + '\t' + resinfo[
-        5] + '\t' + strand1 + '/' + strand2 + '\t' + direct1 + '/' + direct2 + '\t' +
-                     str(len(splitreadnum)) + '\t' + str(totalsplitread) + '\t' + str(totaldiscordant) + '\t' + resinfo[
-                         6] + '\t' + resinfo[8] + '\n')
-    outfull.write(str(currentid) + '\t' + resinfo[0] + '\t' + resinfo[4] + '\t' + resinfo[
-        5] + '\t' + strand1 + '/' + strand2 + '\t' + direct1 + '/' + direct2 + '\t' + str(
-        len(splitreadnum)) + '\t' + str(cellsup) + '\t' + str(totalsplitread) + '\t' + str(splitreadnum) + '\t' +
-                  str(totaldiscordant) + '\t' + str(discordant) + '\t' + resinfo[6] + '\t' + resinfo[8] + '\n')
+    if direct1 == 'd' and direct2 == 'u':
+        fgenes = resinfo[0].split('--')
+        outabridge.write(str(currentid) + '\t' + fgenes[1] + '--' + fgenes[0] + '\t' + resinfo[5] + '\t' + resinfo[
+            4] + '\t' + strand2 + '/' + strand1 + '\t' + direct2 + '/' + direct1 + '\t' +
+                         str(len(splitreadnum)) + '\t' + str(totalsplitread) + '\t' + str(totaldiscordant) + '\t' + resinfo[
+                             6] + '\t' + resinfo[8] + '\n')
+        outfull.write(str(currentid) + '\t' + fgenes[1] + '--' + fgenes[0] + '\t' + resinfo[5] + '\t' + resinfo[
+            4] + '\t' + strand2 + '/' + strand1 + '\t' + direct2 + '/' + direct1 + '\t' + str(
+            len(splitreadnum)) + '\t' + str(cellsup) + '\t' + str(totalsplitread) + '\t' + str(splitreadnum) + '\t' +
+                      str(totaldiscordant) + '\t' + str(discordant) + '\t' + resinfo[6] + '\t' + resinfo[8] + '\n')
+    else:
+        outabridge.write(str(currentid) + '\t' + resinfo[0] + '\t' + resinfo[4] + '\t' + resinfo[
+            5] + '\t' + strand1 + '/' + strand2 + '\t' + direct1 + '/' + direct2 + '\t' +
+                         str(len(splitreadnum)) + '\t' + str(totalsplitread) + '\t' + str(totaldiscordant) + '\t' + resinfo[
+                             6] + '\t' + resinfo[8] + '\n')
+        outfull.write(str(currentid) + '\t' + resinfo[0] + '\t' + resinfo[4] + '\t' + resinfo[
+            5] + '\t' + strand1 + '/' + strand2 + '\t' + direct1 + '/' + direct2 + '\t' + str(
+            len(splitreadnum)) + '\t' + str(cellsup) + '\t' + str(totalsplitread) + '\t' + str(splitreadnum) + '\t' +
+                      str(totaldiscordant) + '\t' + str(discordant) + '\t' + resinfo[6] + '\t' + resinfo[8] + '\n')
 infile.close()
 outabridge.close()
 outfull.close()
