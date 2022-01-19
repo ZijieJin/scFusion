@@ -1,4 +1,4 @@
-# scFusion [![DOI](https://zenodo.org/badge/321539482.svg)](https://zenodo.org/badge/latestdoi/321539482)
+# scFusion 
 
 scFusion is a computational pipeline for detecting gene fusions at single-cell resolution. scFusion works on Linux/Mac OS. If you have any questions related to scFusion, please visit https://github.com/ZijieJin/scFusion and post them on the *Issues* page.
 
