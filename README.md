@@ -1,4 +1,4 @@
-# scFusion 
+# scFusion  [![DOI](https://zenodo.org/badge/372129480.svg)](https://zenodo.org/badge/latestdoi/372129480)
 
 scFusion is a computational pipeline for detecting gene fusions at single-cell resolution. scFusion works on Linux/Mac OS. If you have any questions related to scFusion, please visit https://github.com/ZijieJin/scFusion and post them on the *Issues* page.
 
@@ -174,7 +174,7 @@ The result file locates at XXX/FinalOutput.abridged.txt or XXX/FinalResult/Final
 
 The annotation file (\*.gtf) may have different format, so making scFusion be compatible with all the formats is difficult. 'gene_name' is the gene name indicator in the annotation, and 'gene_type' or 'gene_biotype' are the gene type (pseudo gene or LncRNA). The annotation file containing only chr1-chrY can work best with scFusion.
 
-## Commercial usage
+## Commercial use
 
 For non-academic use, please email Prof. Xi (ruibinxi@math.pku.edu.cn) to obtain the paid commercial license.
 
