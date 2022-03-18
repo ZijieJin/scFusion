@@ -55,7 +55,7 @@ See **Manual.pdf** for details (it will be uploaded soon).
 
 ## Alternative installation
 
-scFusion consists of Python, R, and Shell scripts that is easy to use. All prerequisites can be installed by conda and pip. If you have trouble with the installation, we provide a Dockerfile to build a Docker image. 
+scFusion is easy to use, consisting of Python, R, and Shell scripts. All prerequisites can be installed by conda and pip. If you have trouble with the installation, we provide a Dockerfile to build a Docker image. 
 
 Below we assume all the required files and folders are in the directory XXX, run
 
