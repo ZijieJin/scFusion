@@ -8,7 +8,7 @@ A new version will be released soon! We will make it easy to use.
 
 ## Software Prerequisite
 
-The software below should be in your PATH. **(They can all be installed by conda and pip)**
+The software below should be in your PATH. **(They can be installed by conda and pip)**
 
 - [STAR](https://github.com/alexdobin/STAR) >= 2.7.2d (tested on 2.7.2d and 2.7.8a)
 - samtools (tested on version 1.10)
