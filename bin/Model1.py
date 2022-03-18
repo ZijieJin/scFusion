@@ -54,11 +54,10 @@ def Cla_LSTM():
     ACT1 = Activation('softmax')(DENSE2)
     # model = Model(inputs=[INPUT1,INPUT2],outputs= ACT1)
     model = Model(inputs=INPUT1,outputs= ACT1)
-    model.summary()
     return model
 
 if __name__ == '__main__':
-
+    np.random.seed(1122)
     Good_for_Tra = np.load('Good_for_Tra.npy')
     Simu_for_Tra = np.load('Simu_for_Tra.npy')
     Good_for_Tst = np.load('Good_for_Tst.npy')

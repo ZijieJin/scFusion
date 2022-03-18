@@ -6,6 +6,7 @@ from keras.optimizers import Adam
 import numpy as np
 import sys
 ########################################################################################################################
+np.random.seed(1122)
 ChimericFile = sys.argv[1]
 FakeChimericFile = sys.argv[2]
 Outdir = sys.argv[3]
@@ -88,7 +89,7 @@ DataNum = min(Data1.shape[0],Data2.shape[0])
 Data1 = Data1[0:DataNum,:,:]
 Data2 = Data2[0:DataNum,:,:]
 
-TraNum = np.int(DataNum*0.7)
+TraNum = int(DataNum*0.7)
 
 Good_for_Tra = Data1[0:TraNum,:,:]
 Simu_for_Tra = Data2[0:TraNum,:,:]

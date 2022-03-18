@@ -15,7 +15,7 @@ import os
 import sys
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-
+np.random.seed(1122)
 outfile = open(sys.argv[1], 'w')
 weightfile = sys.argv[2]
 prefix = ''

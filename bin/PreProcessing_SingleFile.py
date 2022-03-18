@@ -9,6 +9,9 @@ import sys
 def ReverseComplement(str):
     return str[::-1].replace('A', 't').replace('T', 'a').replace('G', 'c').replace('C', 'g').upper()
 
+
+
+np.random.seed(1122)
 readfile = sys.argv[1]
 findgang = sys.argv[1].rfind('/')
 filedir = sys.argv[1][:findgang+1]
