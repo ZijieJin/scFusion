@@ -59,7 +59,7 @@ scFusion is easy to use, consisting of Python, R, and Shell scripts. All prerequ
 
 Below we assume all the required files and folders are in the directory XXX, run
 
-`docker run -v XXX:/data --rm jzj2035198/scfusion python [commands]`
+`docker run -v XXX:/data --rm jzj2035198/scfusion python -u /usr/local/src/scFusion/scFusion.py [commands]`
 
 The `XXX:/data` means you map the XXX folder to /data, so all your files and directories in XXX can be found in /data. 
 
