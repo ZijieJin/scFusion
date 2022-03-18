@@ -65,7 +65,7 @@ The `XXX:/data` means you map the XXX folder to /data, so all your files and dir
 
 ## About the annotation file
 
-The annotation file (\*.gtf) may have different format, so making scFusion be compatible with all the formats is difficult. 'gene_name' is the gene name indicator in the annotation, and 'gene_type' or 'gene_biotype' are the gene type (pseudo gene or LncRNA). The annotation file containing only chr1-chrY can work best with scFusion.
+The annotation file (\*.gtf) may have different format, so making scFusion be compatible with all the formats is difficult. 'gene_name' is the gene name indicator in the annotation, and 'gene_type' or 'gene_biotype' are the gene type (pseudo gene or LncRNA). 
 
 ## Commercial use
 
