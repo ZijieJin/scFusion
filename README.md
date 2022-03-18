@@ -2,10 +2,6 @@
 
 scFusion is a computational pipeline for detecting gene fusions at single-cell resolution. scFusion works on Linux/Mac OS. If you have any questions related to scFusion, please visit https://github.com/ZijieJin/scFusion and post them on the *Issues* page or email me: jinzijie@pku.edu.cn
 
-## Announcement
-
-A new version will be released soon! We will make it easy to use.
-
 ## Software Prerequisite
 
 The software below should be in your PATH. **(They can be installed by conda and pip)**
@@ -42,9 +38,7 @@ The software below should be in your PATH. **(They can be installed by conda and
 
 ## Data Requirement
 
-- Single cell RNA sequencing files, named with numbers (better with consecutive numbers). (*_1.fastq, *_2.fastq) (e.g. 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq) **The filenames must be \*_1.fastq and \*_2.fastq. \*_1.fq is not allowed.**
-
-- STAR reference dataset(Please build it, see [Section 2 of STARManual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf))
+- Single cell RNA sequencing files from Smart-Seq protocol. File names should be *_1.fastq, *_2.fastq (e.g. 1_1.fastq, 1_2.fastq, 2_1.fastq, 2_2.fastq) ** \*_1.fq is not allowed.**
 
 - Reference genome file (*.fa)(like hg19.fa, file size = ~3G)
 
