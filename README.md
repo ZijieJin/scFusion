@@ -7,14 +7,14 @@ scFusion is a computational pipeline for detecting gene fusions at single-cell r
 The software below should be in your PATH. **(They can be installed by conda and pip)**
 
 - [STAR](https://github.com/alexdobin/STAR) >= 2.7.2d (tested on 2.7.2d and 2.7.8a)
-- samtools (tested on version 1.10)
+- samtools >= 1.0 (tested on version 1.10)
 - bedtools (tested on version 2.29.2)
 - python 3
-- R >= 3.5 (tested on 3.5.1, 3.6.0, 4.0.2, 4.0.5)
+- R >= 3.5 
 - R package: stringr
-- python module: [pyensembl](https://github.com/openvax/pyensembl) (tested on version 1.8.8)
-- python module: pysam (tested on version 0.16.0.1)
-- python module: tensorflow, keras, and numpy (version 2.8.0, 2.8.0, and 1.22.3, respectively) OR tensorflow, keras, numpy, and scipy (version 2.3.0, 2.4.3, 1.18.5 and 1.4.1, respectively)
+- python module: [pyensembl](https://github.com/openvax/pyensembl)
+- python module: pysam (tested on version 0.18.0)
+- python module: tensorflow, keras, and numpy (version 2.8.0, 2.8.0, and 1.22.3, respectively) OR tensorflow, keras, numpy, and scipy (version 2.3.0, 2.4.3, 1.18.5, and 1.4.1, respectively)
 
 
 ## Recommend Configuration
@@ -22,12 +22,6 @@ The software below should be in your PATH. **(They can be installed by conda and
 - 64 GB memory or more for each task
 
 - 8 CPU cores or more for each task 
-
-## Minimum Configuration
-
-- 64 GB Memory 
-
-- 4 CPU cores
 
 ## Optional Configuration
 
