@@ -14,7 +14,7 @@ The software below should be in your PATH. **(They can be installed by conda and
 - R package: stringr
 - python module: [pyensembl](https://github.com/openvax/pyensembl)
 - python module: pysam (tested on version 0.18.0)
-- python module: tensorflow, keras, and numpy (version 2.8.0, 2.8.0, and 1.22.3, respectively) OR tensorflow, keras, numpy, and scipy (version 2.3.0, 2.4.3, 1.18.5, and 1.4.1, respectively)
+- python module: tensorflow, keras, and numpy (version 2.8.0, 2.8.0, and 1.22.3, respectively) **OR** tensorflow, keras, numpy, and scipy (version 2.3.0, 2.4.3, 1.18.5, and 1.4.1, respectively)
 
 
 ## Recommend Configuration
