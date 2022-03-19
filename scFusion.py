@@ -23,9 +23,9 @@ group2.add_argument("-f", "--FileDir", help='The folder of input data.')
 parser3 = subparsers.add_parser('RestoreName', help='Restore file names.', add_help=False)
 group3 = parser3.add_argument_group('Required parameters')
 group3.add_argument("-f", "--FileDir", help='The folder of input data.')
-parser4 = subparsers.add_parser('Index', help='Produce some necessary files.', add_help=False)
+parser4 = subparsers.add_parser('Prepare', help='Generate some necessary files.', add_help=False)
 group4 = parser4.add_argument_group('Required parameters')
-group4.add_argument("-d", "--GenomeDir", help='The genome index folder.')
+group4.add_argument("-d", "--GenomeDir", help='The path of folder saving the generated files [GENOMEDIR].')
 group4.add_argument("-g", "--Genome", help='The reference file (*.fasta or *.fa).')
 group4.add_argument("-a", "--Annotation", help='The gtf annotation file (*.gtf).')
 parser5 = subparsers.add_parser('ReadMapping', help='Mapping pair-end reads using STAR.', add_help=False)
@@ -35,12 +35,12 @@ group51.add_argument("-f", "--FileDir", help='The folder of input data.')
 group51.add_argument("-b", "--Begin", help='The first index of input files.')
 group51.add_argument("-e", "--End", help='The last index of input files.')
 group51.add_argument("-s", "--STARIndex", help='The STAR index folder.')
-group52.add_argument("-o", "--OutDir", help='The output folder of the results and temporal files, default is FileDir.')
+group51.add_argument("-o", "--OutDir", help='The output folder of the results and temporal files.')
 group52.add_argument("-t", "--Thread", default='8', help='Number of threads can be used, default is 8')
 parser6 = subparsers.add_parser('ReadProcessing', help='Process the chimeric reads.', add_help=False)
 group61 = parser6.add_argument_group('Required parameters')
 group62 = parser6.add_argument_group('Optional parameters')
-group61.add_argument("-d", "--GenomeDir", help='The genome index folder.')
+group61.add_argument("-d", "--GenomeDir", help='The path of GENOMEDIR.')
 group61.add_argument("-o", "--OutDir", help='The output folder of the results and temporal files.')
 mappabilitygroup = group62.add_mutually_exclusive_group()
 mappabilitygroup.add_argument("-m", "--Mappability", default=programdir + '/data/hg19mappability75.txt',
@@ -55,7 +55,7 @@ group72 = parser7.add_argument_group('Optional parameters')
 group71.add_argument("-o", "--OutDir", help='The output folder of the results and temporal files.')
 group71.add_argument("-b", "--Begin", help='The first index of input files.')
 group71.add_argument("-e", "--End", help='The last index of input files.')
-group71.add_argument("-d", "--GenomeDir", help='The genome index folder.')
+group71.add_argument("-d", "--GenomeDir", help='The path of GENOMEDIR.')
 group72.add_argument("-p", "--Prefix", default='.',
                      help='The prefix of result file, default is blank. This should be specified if users want to compare the results of different settings.')
 parser8 = subparsers.add_parser('Retrain', help='Retrain the network using current data.', add_help=False)
@@ -71,7 +71,7 @@ group82.add_argument("-c", "--Epoch", default='10',
 parser9 = subparsers.add_parser('ArtifactScoring', help='Find the artifacts', add_help=False)
 group91 = parser9.add_argument_group('Required parameters')
 group92 = parser9.add_argument_group('Optional parameters')
-group91.add_argument("-d", "--GenomeDir", help='The genome index folder.')
+group91.add_argument("-d", "--GenomeDir", help='The path of GENOMEDIR.')
 group91.add_argument("-o", "--OutDir", help='The output folder of the results and temporal files.')
 group91.add_argument("-b", "--Begin", help='The first index of input files.')
 group91.add_argument("-e", "--End", help='The last index of input files.')
@@ -83,8 +83,8 @@ parser10 = subparsers.add_parser('FusionReport', help='Report gene fusions.', ad
 group101 = parser10.add_argument_group('Required parameters')
 group102 = parser10.add_argument_group('Optional parameters')
 group101.add_argument("-f", "--FileDir", help='The folder of input data.')
-group101.add_argument("-d", "--GenomeDir", help='The genome index folder.')
-group102.add_argument("-o", "--OutDir", help='The output folder of the results and temporal files, default is FileDir.')
+group101.add_argument("-d", "--GenomeDir", help='The path of GENOMEDIR.')
+group101.add_argument("-o", "--OutDir", help='The output folder of the results and temporal files.')
 group101.add_argument("-b", "--Begin", help='The first index of input files.')
 group101.add_argument("-e", "--End", help='The last index of input files.')
 group102.add_argument("-p", "--Prefix", default='.',
@@ -160,8 +160,6 @@ if sys.argv[1] == 'Index':
         print('ERROR!!!!!')
 
 if sys.argv[1] == 'ReadMapping':
-    if not args.OutDir and args.FileDir:
-        args.OutDir = args.FileDir
     if not args.FileDir or not args.OutDir or not args.Begin or not args.End or not args.STARIndex:
         parser5.print_help()
         print('Please specify all required parameters!')
@@ -231,8 +229,6 @@ if sys.argv[1] == 'ArtifactScoring':
         print('ERROR!!!!!')
 
 if sys.argv[1] == 'FusionReport':
-    if not args.OutDir and args.FileDir:
-        args.OutDir = args.FileDir
     if not args.FileDir or not args.OutDir or not args.Begin or not args.End or not args.GenomeDir:
         parser10.print_help()
         print('Please specify all required parameters!')
