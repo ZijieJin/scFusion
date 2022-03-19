@@ -2,7 +2,6 @@ from keras.models import Sequential
 from keras.layers import Embedding,Dropout,Bidirectional,Flatten,Dense,LSTM,TimeDistributed
 from keras.callbacks import ModelCheckpoint,CSVLogger
 from keras.layers import Conv1D, GlobalAveragePooling1D, MaxPooling1D
-from keras.optimizers import Adam
 import numpy as np
 import sys
 ########################################################################################################################

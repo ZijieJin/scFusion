@@ -10,9 +10,9 @@ from keras.models import Sequential,Model
 from keras.layers import Embedding,Dropout,Bidirectional,Flatten,Dense,LSTM,TimeDistributed, Activation,Input,merge,concatenate
 from keras.callbacks import ModelCheckpoint,CSVLogger
 from keras.layers import Conv1D, GlobalAveragePooling1D, MaxPooling1D
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 import numpy as np
-from keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 import os
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     model = Cla_LSTM()
     model.load_weights('weight-010.hdf5')
 
-    ADAM = Adam(lr=0.001)
+    ADAM = Adam(learning_rate=0.001)
     model_checkpoint = ModelCheckpoint(filepath='weight-{epoch:03d}.hdf5', verbose=1, monitor='val_loss', save_best_only=True)
 
     model.compile(loss='binary_crossentropy', optimizer=ADAM, metrics=['accuracy'])
