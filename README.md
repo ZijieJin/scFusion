@@ -39,7 +39,7 @@ The software below should be in your PATH. **(They can be installed by conda and
 
 ## Usage
 
-Download all scripts, unzip the hg19mappability file in the data folder, and run scFusion.py in the command line.
+Download all scripts, unzip the hg19mappability file in the data folder, and run scFusion.py.
 
 See **Manual.pdf** for details.
 
