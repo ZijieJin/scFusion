@@ -4,8 +4,7 @@ import codecs
 
 
 # ***** readme *****
-# This code remove the low mappability records of Chimeric sam by star
-# if the mappability < 1, delete the record locating at this position
+# This code does not remove the low mappability records of Chimeric sam by star
 
 ChimericSamFile = codecs.open(sys.argv[1], 'r',  encoding='utf-8', errors='ignore')
 OutputFile = open(sys.argv[2], 'w')
@@ -25,33 +24,9 @@ for line in lines:
             continue
         if info[2].find('M') > -1:
             continue
-    if info[0] != lastname:
-        bad = 0
-        poss = []
-        for item in linestore:
-            info = item.split('\t')
-            '''
-            if info[5].find('N') > -1:
-                bad = 1
-                break
-            '''
-            poss.append(info[3])
-        if len(poss) <= 1 or (len(poss) == 2 and abs(int(poss[0])-int(poss[1])) <= 10):
-            continue
-        for subline in linestore:
-            try:
-                sep = '\t'
-                subinfo = subline.split('\t')
-                if not subinfo[2].startswith('chr'):
-                    subinfo[2] = 'chr' + subinfo[2]
-                OutputFile.write(sep.join(subinfo))
-            except:
-                print(subline)
-        info = line.split('\t')
-        lastname = info[0]
-        linestore = [line]
-    else:
-        linestore.append(line)
+    if not info[2].startswith('chr'):
+        info[2] = 'chr' + info[2]
+    OutputFile.write(line)
     if line == '':
         break
 ChimericSamFile.close()
