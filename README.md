@@ -1,6 +1,6 @@
 # scFusion  [![DOI](https://zenodo.org/badge/372129480.svg)](https://zenodo.org/badge/latestdoi/372129480)
 
-scFusion is a computational pipeline for detecting gene fusions at single-cell resolution (For Smart-Seq data rather than 10X). scFusion works on Linux/Mac OS. If you have any questions related to scFusion, please visit https://github.com/ZijieJin/scFusion and post them on the *Issues* page or email me: jinzijie@pku.edu.cn
+scFusion is a computational pipeline for detecting gene fusions at single-cell resolution (For Smart-Seq data rather than 10X). scFusion works on Linux/Mac OS. If you have any questions related to scFusion, please visit https://github.com/ZijieJin/scFusion and post them on the *Issues* page or email me: jzj2035198@outlook.com
 
 ## Software Prerequisite
 
